@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mootelu Trang | มูเตลู เมืองตรัง</title>
+    
+    <!-- Fonts: Sarabun (เนื้อหา), Charm (หัวข้อไทย), Cinzel (หัวข้ออังกฤษ) -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Charm:wght@700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-deep: #050505;
+            --bg-card: rgba(20, 20, 20, 0.7);
+            --gold-primary: #D4AF37;
+            --gold-light: #F9E29C;
+            --gold-dark: #8A6E24;
+            --text-main: #EAEAEA;
+            --text-muted: #A0A0A0;
+            --accent-red: #580000;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* --- Scrollbar --- */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, var(--gold-dark), var(--gold-primary)); border-radius: 3px; }
+
+        /* --- Canvas for Smoke/Particles --- */
+        #sacred-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            padding: 20px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: all 0.4s ease;
+            border-bottom: 1px solid rgba(212, 175, 55, 0);
+        }
+
+        nav.scrolled {
+            background: rgba(5, 5, 5, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 50px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .brand {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            background: linear-gradient(to right, var(--gold-light), var(--gold-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: 2px;
+            display: flex; align-items: center; gap: 10px;
+        }
+
+        .menu a {
+            color: var(--text-main); text-decoration: none; margin-left: 30px;
+            font-weight: 300; transition: 0.3s; position: relative; font-size: 0.95rem;
+        }
+        .menu a::after {
+            content: ''; position: absolute; bottom: -5px; left: 50%; width: 0; height: 1px;
+            background: var(--gold-primary); transition: 0.3s; transform: translateX(-50%);
+        }
+        .menu a:hover::after { width: 100%; }
+        .menu a:hover { color: var(--gold-light); text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
+
+        /* --- Hero Section --- */
+        header {
+            height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center;
+            position: relative; overflow: hidden;
+        }
+
+        .hero-bg-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, #050505 90%), 
+                        url('https://images.unsplash.com/photo-1599707367072-cd6ad6cb3d2e?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            filter: brightness(0.4) saturate(0);
+            z-index: -2;
+            animation: breathe 10s infinite alternate;
+        }
+        
+        @keyframes breathe { from { transform: scale(1); } to { transform: scale(1.05); } }
+
+        .hero-title {
+            font-family: 'Charm', cursive;
+            font-size: clamp(4rem, 10vw, 7rem);
+            color: var(--gold-primary);
+            line-height: 1.2;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+            position: relative;
+            z-index: 1;
+            /* Shimmer Effect */
+            background: linear-gradient(to right, #996515 0%, #FFD700 50%, #996515 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer { to { background-position: 200% center; } }
+
+        .hero-subtitle {
+            font-size: 1.2rem; letter-spacing: 5px; color: var(--text-muted);
+            margin-top: 10px; font-weight: 300; text-transform: uppercase;
+            border-top: 1px solid var(--gold-dark);
+            border-bottom: 1px solid var(--gold-dark);
+            padding: 10px 30px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .scroll-indicator {
+            position: absolute; bottom: 40px;
+            width: 30px; height: 50px;
+            border: 2px solid var(--gold-primary);
+            border-radius: 20px;
+            display: flex; justify-content: center;
+        }
+        .scroll-indicator::before {
+            content: ''; width: 4px; height: 8px; background: var(--gold-primary);
+            border-radius: 2px; margin-top: 10px;
+            animation: scrollDown 1.5s infinite;
+        }
+        @keyframes scrollDown { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(20px); } }
+
+        /* --- Content Container --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 100px 20px; position: relative; z-index: 2; }
+
+        .section-head { text-align: center; margin-bottom: 80px; position: relative; }
+        .section-head h2 {
+            font-family: 'Charm', cursive; font-size: 3.5rem; color: var(--gold-primary);
+            margin-bottom: 10px;
+        }
+        .section-head::after {
+            content: '♦'; display: block; color: var(--gold-dark); font-size: 1.5rem; margin-top: 10px;
+        }
+
+        /* --- 3D Cards Grid --- */
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px;
+            perspective: 1000px; /* Essential for 3D effect */
+        }
+
+        .card-wrapper {
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.1s ease-out, box-shadow 0.3s; /* Fast transform for JS tilt */
+            cursor: pointer;
+            height: 100%;
+            display: flex; flex-direction: column;
+            position: relative;
+        }
+
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0);
+            transition: 0.3s; pointer-events: none; z-index: 3;
+            border: 1px solid transparent;
+        }
+
+        .card:hover::before {
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+            border-color: var(--gold-primary);
+        }
+
+        .card-img-box {
+            height: 250px; overflow: hidden; position: relative;
+        }
+
+        .card-img-box img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: 0.8s ease; filter: grayscale(40%);
+        }
+
+        .card:hover .card-img-box img { transform: scale(1.1); filter: grayscale(0%); }
+
+        .card-body { padding: 30px; flex-grow: 1; position: relative; z-index: 2; }
+
+        .card-tag {
+            display: inline-block; font-size: 0.75rem; color: #000;
+            background: var(--gold-primary); padding: 4px 10px;
+            border-radius: 2px; font-weight: 600; margin-bottom: 15px;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .card h3 {
+            font-family: 'Cinzel', serif; font-size: 1.4rem; margin-bottom: 10px; color: #fff;
+        }
+
+        .card p { color: #bbb; font-weight: 300; line-height: 1.6; font-size: 0.95rem; }
+
+        /* --- Lucky Number Widget --- */
+        .lucky-widget {
+            background: linear-gradient(135deg, #1a0505 0%, #000 100%);
+            border: 1px solid var(--accent-red);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 100px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(139, 0, 0, 0.2);
+        }
+        
+        .lucky-widget::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 60%);
+            animation: rotateBg 20s linear infinite;
+        }
+        @keyframes rotateBg { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .lucky-btn {
+            background: var(--gold-primary); color: #000; border: none;
+            padding: 12px 30px; font-size: 1.1rem; border-radius: 50px;
+            cursor: pointer; font-family: 'Sarabun'; font-weight: 600;
+            margin-top: 20px; transition: 0.3s;
+            position: relative; z-index: 2;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+        .lucky-btn:hover { transform: scale(1.05); background: #fff; }
+
+        #luckyResult {
+            font-size: 3rem; font-family: 'Charm'; color: var(--gold-light);
+            margin-top: 20px; height: 60px; text-shadow: 0 0 20px var(--gold-primary);
+        }
+
+        /* --- Modal --- */
+        .modal {
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        
+        .modal.show { opacity: 1; }
+
+        .modal-content {
+            background: #111; border: 1px solid var(--gold-dark);
+            width: 90%; max-width: 1000px;
+            display: grid; grid-template-columns: 1.2fr 0.8fr;
+            border-radius: 0; /* Square edges for more premium look */
+            box-shadow: 0 0 80px rgba(212, 175, 55, 0.15);
+            transform: translateY(50px); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal.show .modal-content { transform: translateY(0); }
+
+        .modal-img { height: 500px; position: relative; }
+        .modal-img img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .modal-text {
+            padding: 50px; display: flex; flex-direction: column; justify-content: center;
+            background: radial-gradient(circle at top right, #1a1a1a, #0a0a0a);
+            position: relative;
+        }
+
+        /* Decorative Corners */
+        .corner {
+            position: absolute; width: 20px; height: 20px;
+            border: 2px solid var(--gold-primary);
+            transition: 0.3s;
+        }
+        .modal-content:hover .corner { width: 40px; height: 40px; }
+        .tl { top: 10px; left: 10px; border-bottom: none; border-right: none; }
+        .br { bottom: 10px; right: 10px; border-top: none; border-left: none; }
+
+        .close-modal {
+            position: absolute; top: 20px; right: 20px;
+            color: var(--text-muted); cursor: pointer; font-size: 1.5rem;
+            transition: 0.3s;
+        }
+        .close-modal:hover { color: var(--gold-primary); transform: rotate(90deg); }
+
+        /* --- Footer --- */
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 60px 20px; text-align: center;
+            margin-top: 100px; background: #020202;
+            color: #555; font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .modal-content { grid-template-columns: 1fr; height: 90vh; overflow-y: auto; }
+            .modal-img { height: 300px; }
+            .hero-title { font-size: 3.5rem; }
+            .menu { display: none; } /* Hide menu on mobile for simplicity */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sacred Smoke Canvas -->
+    <canvas id="sacred-canvas"></canvas>
+
+    <nav id="navbar">
+        <a href="#" class="brand"><i class="fa-solid fa-dharmachakra fa-spin" style="font-size: 1.4rem; --fa-animation-duration: 10s;"></i> MOOTELU TRANG</a>
+        <div class="menu">
+            <a href="#places">สถานที่มงคล</a>
+            <a href="#lucky">เสี่ยงทาย</a>
+            <a href="#about">ตำนาน</a>
+        </div>
+    </nav>
+
+    <header>
+        <div class="hero-bg-layer"></div>
+        <h1 class="hero-title" data-aos="zoom-out" data-aos-duration="1500">ศรัทธาแห่งเมืองตรัง</h1>
+        <div class="hero-subtitle" data-aos="fade-up" data-aos-delay="500">Spiritual Journey of Trang</div>
+        <div class="scroll-indicator"></div>
+    </header>
+
+    <div class="container">
+        
+        <div id="places">
+            <div class="section-head" data-aos="fade-up">
+                <h2>พิกัดมงคล ๙ แห่ง</h2>
+                <p style="color:#888; font-weight:300;">สักการะเพื่อความเป็นสิริมงคล พลิกฟื้นดวงชะตา</p>
+            </div>
+
+            <div class="grid" id="cardGrid">
+                <!-- Javascript will render 3D cards here -->
+            </div>
+        </div>
+
+        <!-- Lucky Widget -->
+        <div id="lucky" class="lucky-widget" data-aos="fade-up">
+            <div style="position: relative; z-index: 2;">
+                <h2 style="font-family:'Charm'; font-size:2.5rem; color:var(--gold-primary); margin-bottom:10px;">เสี่ยงทายเลขมงคล</h2>
+                <p style="color:#aaa; margin-bottom:20px;">ตั้งจิตอธิษฐาน แล้วกดปุ่มเพื่อรับเลขนำโชคประจำวัน</p>
+                <div id="luckyResult">? ?</div>
+                <button class="lucky-btn" onclick="randomLuckyNumber()">ขอมอบเลขมงคลให้ข้าพเจ้า</button>
+            </div>
+        </div>
+
+        <div id="about" style="margin-top: 100px; text-align: center;" data-aos="fade-up">
+            <i class="fa-solid fa-kaaba" style="font-size: 3rem; color: var(--gold-dark); margin-bottom: 20px;"></i>
+            <h3 style="font-family:'Cinzel'; color:var(--text-main); font-size: 1.5rem; margin-bottom: 15px;">THE LEGEND</h3>
+            <p style="max-width: 600px; margin: 0 auto; color: #777; line-height: 1.8;">
+                รวบรวมสถานที่ศักดิ์สิทธิ์คู่บ้านคู่เมืองตรัง จากศาลเจ้าเก่าแก่สู่วัดวาอารามที่งดงาม 
+                เพื่อให้ผู้มีจิตศรัทธาได้เดินทางมากราบไหว้ขอพร เสริมสร้างพลังใจและความสำเร็จในชีวิต
+            </p>
+            <div style="margin-top: 40px; color: var(--gold-dark);">
+                จัดทำโดย: สุลาวรรณ์ เพ็งเผา | 062-735-8847
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Modal Layout -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="corner tl"></div><div class="corner br"></div>
+            <div class="close-modal" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></div>
+            
+            <div class="modal-img">
+                <img id="mImg" src="">
+                <div style="position:absolute; bottom:0; left:0; width:100%; height:40%; background:linear-gradient(to top, #0a0a0a, transparent);"></div>
+            </div>
+            
+            <div class="modal-text">
+                <span id="mTag" style="color:var(--gold-primary); font-family:'Cinzel'; font-size:0.9rem; letter-spacing:2px; margin-bottom:10px;">TAG</span>
+                <h2 id="mTitle" style="font-family:'Charm'; color: #fff; font-size: 3rem; line-height:1; margin-bottom: 20px;">Title</h2>
+                <div style="width: 50px; height: 2px; background: var(--gold-dark); margin-bottom: 20px;"></div>
+                <p id="mDesc" style="color: #ccc; line-height: 1.8; font-weight: 300;">Description...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        // Navbar Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        // Data
+        const places = [
+            { name: "ศาลเจ้าท่ามกงเยี่ย", img: "image/mokongyeas.jpg", tag: "HEALING & FAMILY", desc: "ศูนย์รวมจิตใจชาวตรัง โดดเด่นเรื่องการรักษาโรคภัยไข้เจ็บและการขอบุตร ผู้คนนิยมพาบุตรหลานมาฝากตัวเป็นลูกบุญธรรมเพื่อความร่มเย็นเป็นสุข" },
+            { name: "ศาลเจ้ากิวอ่องเอี่ย", img: "image/kiwongee.jpg", tag: "PURIFICATION", desc: "ต้นกำเนิดประเพณีถือศีลกินเจอันยิ่งใหญ่ ศักดิ์สิทธิ์ในการปัดเป่าสิ่งชั่วร้าย เสริมชะตาชีวิตให้พบเจอแต่ความสว่างไสว" },
+            { name: "ศาลหลักเมืองตรัง", img: "image/themaincourt.jpg", tag: "STABILITY", desc: "ตั้งอยู่ที่ควนธานี เป็นหลักชัยของเมือง เหมาะสำหรับผู้ที่ต้องการความมั่นคงในหน้าที่การงาน และบารมีในการปกครองคน" },
+            { name: "ศาลเจ้าเปากง", img: "image/baokongshrine.jpg", tag: "JUSTICE", desc: "เทพเจ้าแห่งความซื่อสัตย์ยุติธรรม ขอพรให้ชนะคดีความ ขจัดคนพาลและศัตรูหมู่มารออกจากชีวิต" },
+            { name: "วิหารคริสต์ตรัง", img: "image/church.jpg", tag: "LOVE & PEACE", desc: "สถาปัตยกรรมสีเหลืองนวลอันงดงาม ให้บรรยากาศสงบสุข เหมาะแก่การขอพรเรื่องความรักที่มั่นคงและครอบครัวที่อบอุ่น" },
+            { name: "วัดกะพังสุรินทร์", img: "image/kaphangsurin.jpg", tag: "PROSPERITY", desc: "พระอารามหลวงคู่เมืองตรัง สถาปัตยกรรมงดงาม เหมาะแก่การทำบุญใหญ่เพื่อเสริมบารมีและโชคลาภวาสนา" },
+            { name: "ศาลพระพิฆเนศ", img: "image/ganesha.jpg", tag: "SUCCESS", desc: "เทพเจ้าแห่งปัญญาและศิลปวิทยาการ ผู้ขจัดอุปสรรคทั้งปวง เหมาะสำหรับคนทำงาน ศิลปิน และนักเรียนนักศึกษา" },
+            { name: "เจ้าแม่กวนอิม", img: "image/guanyin.jpg", tag: "MERCY", desc: "พระโพธิสัตว์กวนอิมบนยอดเขาหนองยวน ประทานพรเรื่องความเมตตา การค้าขายคล่องตัว และความร่มเย็นเป็นสุข" },
+            { name: "วัดสาริการาม", img: "image/sarikaram.jpg", tag: "PROTECTION", desc: "สถานที่ศักดิ์สิทธิ์สำหรับการแก้ชง สะเดาะเคราะห์ ต่อชะตา พลิกจากร้ายให้กลายเป็นดี" }
+        ];
+
+        // Render Cards with 3D Tilt Logic
+        const grid = document.getElementById("cardGrid");
+        places.forEach((p, i) => {
+            const cardHTML = `
+                <div class="card-wrapper" data-aos="fade-up" data-aos-delay="${i*100}">
+                    <div class="card" onclick="openModal(${i})">
+                        <div class="card-img-box">
+                            <img src="${p.img}" alt="${p.name}">
+                        </div>
+                        <div class="card-body">
+                            <span class="card-tag">${p.tag}</span>
+                            <h3>${p.name}</h3>
+                            <p>${p.desc.substring(0, 80)}...</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            grid.innerHTML += cardHTML;
+        });
+
+        // 3D Tilt Effect Script
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -5; // Max rotation deg
+                const rotateY = ((x - centerX) / centerX) * 5;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            });
+        });
+
+        // Modal Logic
+        const modal = document.getElementById("modal");
+        function openModal(index) {
+            const p = places[index];
+            document.getElementById("mImg").src = p.img;
+            document.getElementById("mTitle").innerText = p.name;
+            document.getElementById("mTag").innerText = p.tag;
+            document.getElementById("mDesc").innerText = p.desc;
+            
+            modal.style.display = "flex";
+            setTimeout(() => { modal.classList.add("show"); }, 10);
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeModal() {
+            modal.classList.remove("show");
+            setTimeout(() => { modal.style.display = "none"; }, 300);
+            document.body.style.overflow = "auto";
+        }
+        
+        window.onclick = (e) => { if (e.target == modal) closeModal(); }
+
+        // Lucky Number Logic
+        function randomLuckyNumber() {
+            const num1 = Math.floor(Math.random() * 10);
+            const num2 = Math.floor(Math.random() * 10);
+            const el = document.getElementById("luckyResult");
+            
+            // Animation loop
+            let i = 0;
+            const interval = setInterval(() => {
+                el.innerText = Math.floor(Math.random() * 99);
+                i++;
+                if (i > 10) {
+                    clearInterval(interval);
+                    el.innerText = `${num1}${num2}`;
+                    el.style.color = "#fff";
+                    el.style.textShadow = "0 0 30px #D4AF37";
+                }
+            }, 50);
+        }
+
+        /* --- Sacred Smoke Canvas Animation --- */
+        const canvas = document.getElementById("sacred-canvas");
+        const ctx = canvas.getContext("2d");
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener("resize", resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = Math.random() * -1.5 - 0.5;
+                this.size = Math.random() * 3 + 1;
+                this.opacity = Math.random() * 0.5;
+                this.life = Math.random() * 100 + 100;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.life--;
+                this.opacity -= 0.002;
+                if (this.life <= 0 || this.opacity <= 0) this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 50;
+                this.vx = (Math.random() - 0.5) * 1;
+                this.vy = Math.random() * -1 - 0.5;
+                this.opacity = Math.random() * 0.4;
+                this.life = Math.random() * 100 + 100;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`; // Gold color
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+    </script>
+</body>
+</html>
