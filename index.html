@@ -16,13 +16,13 @@
 
     <style>
         :root {
-            --bg-deep: #050505;
-            --bg-card: rgba(20, 20, 20, 0.7);
+            --bg-deep: #080808;
+            --bg-card: rgba(25, 25, 25, 0.85);
             --gold-primary: #D4AF37;
-            --gold-light: #F9E29C;
+            --gold-light: #FFE5B4;
             --gold-dark: #8A6E24;
             --text-main: #EAEAEA;
-            --text-muted: #A0A0A0;
+            --text-muted: #B0B0B0;
             --accent-red: #580000;
         }
 
@@ -33,13 +33,20 @@
             background-color: var(--bg-deep);
             color: var(--text-main);
             overflow-x: hidden;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            /* Subtle Pattern */
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 60%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
         /* --- Scrollbar --- */
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, var(--gold-dark), var(--gold-primary)); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(to bottom, var(--gold-dark), var(--gold-primary)); 
+            border-radius: 4px; 
+            border: 2px solid #000;
+        }
 
         /* --- Canvas for Smoke/Particles --- */
         #sacred-canvas {
@@ -53,40 +60,42 @@
             padding: 20px 50px;
             display: flex; justify-content: space-between; align-items: center;
             transition: all 0.4s ease;
-            border-bottom: 1px solid rgba(212, 175, 55, 0);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
         }
 
         nav.scrolled {
-            background: rgba(5, 5, 5, 0.9);
-            backdrop-filter: blur(10px);
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(15px);
             padding: 15px 50px;
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.6);
         }
 
         .brand {
             font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             background: linear-gradient(to right, var(--gold-light), var(--gold-primary));
             background-clip: text;
-
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 700;
             letter-spacing: 2px;
-            display: flex; align-items: center; gap: 10px;
+            display: flex; align-items: center; gap: 12px;
+            text-transform: uppercase;
         }
 
         .menu a {
-            color: var(--text-main); text-decoration: none; margin-left: 30px;
-            font-weight: 300; transition: 0.3s; position: relative; font-size: 0.95rem;
+            color: var(--text-main); text-decoration: none; margin-left: 35px;
+            font-weight: 300; transition: 0.3s; position: relative; font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
         .menu a::after {
             content: ''; position: absolute; bottom: -5px; left: 50%; width: 0; height: 1px;
             background: var(--gold-primary); transition: 0.3s; transform: translateX(-50%);
         }
         .menu a:hover::after { width: 100%; }
-        .menu a:hover { color: var(--gold-light); text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
+        .menu a:hover { color: var(--gold-light); text-shadow: 0 0 8px rgba(212, 175, 55, 0.6); }
 
         /* --- Hero Section --- */
         header {
@@ -98,76 +107,74 @@
 
         .hero-bg-layer {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, transparent 0%, #050505 90%), 
+            background: radial-gradient(circle at center, transparent 20%, #050505 100%), 
                         url('https://images.unsplash.com/photo-1599707367072-cd6ad6cb3d2e?q=80&w=2070&auto=format&fit=crop');
             background-size: cover; background-position: center;
-            filter: brightness(0.4) saturate(0);
+            filter: brightness(0.5) saturate(0.2);
             z-index: -2;
-            animation: breathe 10s infinite alternate;
+            animation: breathe 12s infinite alternate ease-in-out;
         }
         
-        @keyframes breathe { from { transform: scale(1); } to { transform: scale(1.05); } }
+        @keyframes breathe { from { transform: scale(1); } to { transform: scale(1.08); } }
 
         .hero-title {
             font-family: 'Charm', cursive;
-            font-size: clamp(4rem, 10vw, 7rem);
-            color: var(--gold-primary);
-            line-height: 1.2;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
-            position: relative;
+            font-size: clamp(3.5rem, 8vw, 6.5rem);
+            line-height: 1.3;
             z-index: 1;
-            /* Shimmer Effect */
-            background-clip: text;
-
-            background: linear-gradient(to right, #996515 0%, #FFD700 50%, #996515 100%);
-            background-size: 200% auto;
+            /* Improved Gold Text */
+            background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            background-size: 300% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shimmer 3s linear infinite;
+            animation: shine 5s linear infinite;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.8));
         }
 
-        @keyframes shimmer { to { background-position: 200% center; } }
+        @keyframes shine { to { background-position: 300% center; } }
 
         .hero-subtitle {
-            font-size: 1.2rem; letter-spacing: 5px; color: var(--text-muted);
-            margin-top: 10px; font-weight: 300; text-transform: uppercase;
-            border-top: 1px solid var(--gold-dark);
-            border-bottom: 1px solid var(--gold-dark);
-            padding: 10px 30px;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
+            font-size: 1.1rem; letter-spacing: 6px; color: var(--text-muted);
+            margin-top: 15px; font-weight: 300; text-transform: uppercase;
+            border-top: 1px solid rgba(212, 175, 55, 0.5);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.5);
+            padding: 12px 40px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
         }
 
         .scroll-indicator {
             position: absolute; bottom: 40px;
-            width: 30px; height: 50px;
-            border: 2px solid var(--gold-primary);
+            width: 24px; height: 44px;
+            border: 2px solid rgba(212, 175, 55, 0.6);
             border-radius: 20px;
             display: flex; justify-content: center;
         }
         .scroll-indicator::before {
-            content: ''; width: 4px; height: 8px; background: var(--gold-primary);
-            border-radius: 2px; margin-top: 10px;
-            animation: scrollDown 1.5s infinite;
+            content: ''; width: 4px; height: 6px; background: var(--gold-primary);
+            border-radius: 2px; margin-top: 8px;
+            animation: scrollDown 2s infinite;
         }
         @keyframes scrollDown { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(20px); } }
 
         /* --- Content Container --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 100px 20px; position: relative; z-index: 2; }
 
-        .section-head { text-align: center; margin-bottom: 80px; position: relative; }
+        .section-head { text-align: center; margin-bottom: 70px; position: relative; }
         .section-head h2 {
-            font-family: 'Charm', cursive; font-size: 3.5rem; color: var(--gold-primary);
-            margin-bottom: 10px;
+            font-family: 'Charm', cursive; font-size: 3.8rem; color: var(--gold-primary);
+            margin-bottom: 10px; text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
         }
+        .section-head p { font-size: 1.1rem; color: #999; letter-spacing: 1px; }
         .section-head::after {
-            content: '♦'; display: block; color: var(--gold-dark); font-size: 1.5rem; margin-top: 10px;
+            content: '✦ ✦ ✦'; display: block; color: var(--gold-dark); 
+            font-size: 1rem; margin-top: 20px; letter-spacing: 10px; opacity: 0.7;
         }
 
         /* --- 3D Cards Grid --- */
         .grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px;
-            perspective: 1000px; /* Essential for 3D effect */
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px;
+            perspective: 1200px; 
         }
 
         .card-wrapper {
@@ -177,154 +184,265 @@
 
         .card {
             background: var(--bg-card);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 8px; /* Sharper corners */
             overflow: hidden;
-            transition: transform 0.1s ease-out, box-shadow 0.3s; /* Fast transform for JS tilt */
+            transition: all 0.3s ease;
             cursor: pointer;
             height: 100%;
             display: flex; flex-direction: column;
             position: relative;
         }
 
-        .card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0);
-            transition: 0.3s; pointer-events: none; z-index: 3;
-            border: 1px solid transparent;
+        /* Hover Glow Effect */
+        .card::after {
+            content: ''; position: absolute; inset: 0;
+            box-shadow: inset 0 0 20px rgba(212, 175, 55, 0);
+            transition: 0.3s; pointer-events: none; z-index: 4; border-radius: 8px;
         }
 
-        .card:hover::before {
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        .card:hover {
             border-color: var(--gold-primary);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 20px rgba(212, 175, 55, 0.2);
+            transform: translateY(-5px);
         }
+        .card:hover::after { box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.1); }
 
         .card-img-box {
-            height: 250px; overflow: hidden; position: relative;
+            height: 240px; overflow: hidden; position: relative;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
         }
 
         .card-img-box img {
             width: 100%; height: 100%; object-fit: cover;
-            transition: 0.8s ease; filter: grayscale(40%);
+            transition: transform 0.8s ease; filter: grayscale(20%) sepia(10%);
         }
 
-        .card:hover .card-img-box img { transform: scale(1.1); filter: grayscale(0%); }
+        .card:hover .card-img-box img { transform: scale(1.1); filter: grayscale(0%) sepia(0%); }
 
         .card-body { padding: 30px; flex-grow: 1; position: relative; z-index: 2; }
 
         .card-tag {
-            display: inline-block; font-size: 0.75rem; color: #000;
-            background: var(--gold-primary); padding: 4px 10px;
-            border-radius: 2px; font-weight: 600; margin-bottom: 15px;
+            display: inline-block; font-size: 0.7rem; color: #111;
+            background: linear-gradient(135deg, #D4AF37, #F9E29C); 
+            padding: 3px 10px;
+            border-radius: 2px; font-weight: 700; margin-bottom: 15px;
             text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
         }
 
         .card h3 {
-            font-family: 'Cinzel', serif; font-size: 1.4rem; margin-bottom: 10px; color: #fff;
+            font-family: 'Cinzel', serif; font-size: 1.5rem; margin-bottom: 12px; color: #fff;
+            letter-spacing: 0.5px;
         }
 
-        .card p { color: #bbb; font-weight: 300; line-height: 1.6; font-size: 0.95rem; }
+        .card p { 
+            color: #ccc; font-weight: 300; line-height: 1.7; font-size: 0.95rem;
+            display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+        }
 
         /* --- Lucky Number Widget --- */
         .lucky-widget {
-            background: linear-gradient(135deg, #1a0505 0%, #000 100%);
-            border: 1px solid var(--accent-red);
-            border-radius: 20px;
-            padding: 40px;
+            background: linear-gradient(135deg, #110505 0%, #000 100%);
+            border: 1px solid #331010;
+            border-radius: 12px;
+            padding: 60px 40px;
             text-align: center;
-            margin-top: 100px;
+            margin-top: 120px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 0 50px rgba(139, 0, 0, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
         
         .lucky-widget::before {
             content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 60%);
-            animation: rotateBg 20s linear infinite;
+            background: radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 60%);
+            animation: rotateBg 30s linear infinite;
         }
         @keyframes rotateBg { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .lucky-btn {
-            background: var(--gold-primary); color: #000; border: none;
-            padding: 12px 30px; font-size: 1.1rem; border-radius: 50px;
+            background: linear-gradient(to right, #D4AF37, #AA771C);
+            color: #111; border: none;
+            padding: 15px 40px; font-size: 1.1rem; border-radius: 50px;
             cursor: pointer; font-family: 'Sarabun'; font-weight: 600;
-            margin-top: 20px; transition: 0.3s;
+            margin-top: 25px; transition: 0.4s;
             position: relative; z-index: 2;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+            letter-spacing: 1px;
         }
-        .lucky-btn:hover { transform: scale(1.05); background: #fff; }
+        .lucky-btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 5px 30px rgba(212, 175, 55, 0.6); 
+            color: #000;
+        }
 
         #luckyResult {
-            font-size: 3rem; font-family: 'Charm'; color: var(--gold-light);
-            margin-top: 20px; height: 60px; text-shadow: 0 0 20px var(--gold-primary);
+            font-size: 4rem; font-family: 'Charm'; color: var(--gold-light);
+            margin-top: 30px; min-height: 80px; 
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+            font-weight: 700;
         }
 
         /* --- Modal --- */
         .modal {
             display: none; position: fixed; z-index: 2000; left: 0; top: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(20px);
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(15px);
             align-items: center; justify-content: center;
-            opacity: 0; transition: opacity 0.3s ease;
+            opacity: 0; transition: opacity 0.4s ease;
         }
         
         .modal.show { opacity: 1; }
 
         .modal-content {
-            background: #111; border: 1px solid var(--gold-dark);
-            width: 90%; max-width: 1000px;
-            display: grid; grid-template-columns: 1.2fr 0.8fr;
-            border-radius: 0; /* Square edges for more premium look */
-            box-shadow: 0 0 80px rgba(212, 175, 55, 0.15);
-            transform: translateY(50px); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: #121212; border: 1px solid var(--gold-dark);
+            width: 95%; max-width: 1200px;
+            /* ปรับสัดส่วน Grid ใหม่ ให้รูปภาพเล็กลงหน่อย (0.7) และข้อความกว้างขึ้น (1.3) เพื่อให้ตัวอักษรเรียงหน้ากระดานสวย */
+            display: grid; grid-template-columns: 0.7fr 1.3fr;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
+            transform: translateY(30px); transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
             overflow: hidden;
             position: relative;
+            max-height: 90vh; 
         }
 
         .modal.show .modal-content { transform: translateY(0); }
 
-        .modal-img { height: 500px; position: relative; }
-        .modal-img img { width: 100%; height: 100%; object-fit: cover; }
+        .modal-img { 
+            position: relative; 
+            height: 100%;
+            min-height: 400px;
+            background: #000;
+        }
+        .modal-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
         
         .modal-text {
-            padding: 50px; display: flex; flex-direction: column; justify-content: center;
-            background: radial-gradient(circle at top right, #1a1a1a, #0a0a0a);
+            padding: 50px 60px; /* เพิ่ม padding แนวนอน */
+            display: flex; flex-direction: column;
+            background: linear-gradient(160deg, #1a1a1a 0%, #0d0d0d 100%);
             position: relative;
+            overflow-y: auto; 
+        }
+
+        /* Modal Text Enhancements */
+        .modal-info-group {
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            padding-top: 25px;
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* แบ่งเป็น 3 คอลัมน์สำหรับข้อมูลเพิ่มเติม */
+            gap: 25px;
+        }
+        
+        .info-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            transition: 0.3s;
+        }
+        .info-item:hover {
+            background: rgba(212, 175, 55, 0.05);
+            border-color: var(--gold-primary);
+        }
+
+        .info-item i {
+            font-size: 1.2rem; margin-bottom: 10px; display: block;
+        }
+
+        .info-item h4 {
+            color: var(--gold-primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 8px; font-family: 'Cinzel', serif;
+        }
+        .info-item p {
+            font-size: 0.9rem; color: #ddd; margin-bottom: 0; line-height: 1.5;
+        }
+        
+        /* Highlight specific for Offerings */
+        .offering-list {
+            font-size: 0.85rem; color: #bbb;
+            list-style: none;
+        }
+        .offering-list li::before {
+            content: '•'; color: var(--gold-dark); margin-right: 5px;
         }
 
         /* Decorative Corners */
         .corner {
-            position: absolute; width: 20px; height: 20px;
+            position: absolute; width: 30px; height: 30px;
             border: 2px solid var(--gold-primary);
-            transition: 0.3s;
+            transition: 0.3s; pointer-events: none;
         }
-        .modal-content:hover .corner { width: 40px; height: 40px; }
-        .tl { top: 10px; left: 10px; border-bottom: none; border-right: none; }
-        .br { bottom: 10px; right: 10px; border-top: none; border-left: none; }
+        .tl { top: 15px; left: 15px; border-bottom: none; border-right: none; }
+        .br { bottom: 15px; right: 15px; border-top: none; border-left: none; }
+        .tr { top: 15px; right: 15px; border-bottom: none; border-left: none; }
+        .bl { bottom: 15px; left: 15px; border-top: none; border-right: none; }
 
-        .close-modal {
-            position: absolute; top: 20px; right: 20px;
-            color: var(--text-muted); cursor: pointer; font-size: 1.5rem;
-            transition: 0.3s;
+        /* Close Button Improved */
+        .close-modal-btn {
+            position: absolute; top: 25px; right: 25px;
+            width: 45px; height: 45px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-primary); 
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.2rem;
+            transition: all 0.3s ease;
+            z-index: 10;
         }
-        .close-modal:hover { color: var(--gold-primary); transform: rotate(90deg); }
+        .close-modal-btn:hover { 
+            background: var(--gold-primary); 
+            color: #000; 
+            transform: rotate(90deg); 
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
 
         /* --- Footer --- */
         footer {
             border-top: 1px solid rgba(255,255,255,0.05);
-            padding: 60px 20px; text-align: center;
-            margin-top: 100px; background: #020202;
+            padding: 80px 20px; text-align: center;
+            margin-top: 150px; background: #020202;
             color: #555; font-size: 0.9rem;
         }
 
         @media (max-width: 900px) {
-            .modal-content { grid-template-columns: 1fr; height: 90vh; overflow-y: auto; }
-            .modal-img { height: 300px; }
+            .modal-content { 
+                grid-template-columns: 1fr; 
+                height: 100%; width: 100%; border: none; max-width: none;
+                grid-template-rows: 250px 1fr;
+            }
+            .modal.show .modal-content { transform: none; }
+            .modal-img { height: 100%; }
+            .modal-text { padding: 30px 20px; }
             .hero-title { font-size: 3.5rem; }
-            .menu { display: none; } /* Hide menu on mobile for simplicity */
+            .menu { display: none; } 
+            .close-modal-btn { top: 15px; right: 15px; width: 40px; height: 40px; background: rgba(0,0,0,0.8); }
+            .modal-info-group { grid-template-columns: 1fr; gap: 15px; }
+        }
+        
+        /* Creator Badge Style */
+        .creator-badge {
+            margin-top: 60px; 
+            padding: 30px 40px; 
+            border: 1px solid var(--gold-dark); 
+            border-radius: 12px; 
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(0,0,0,0.5) 100%);
+            display: inline-block;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .creator-badge:hover {
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(0,0,0,0.6) 100%);
+        }
+        .creator-badge::before {
+            content: ''; position: absolute; top:0; left:0; width: 2px; height: 100%;
+            background: var(--gold-primary);
         }
     </style>
 </head>
@@ -334,7 +452,7 @@
     <canvas id="sacred-canvas"></canvas>
 
     <nav id="navbar">
-        <a href="#" class="brand"><i class="fa-solid fa-dharmachakra fa-spin" style="font-size: 1.4rem; --fa-animation-duration: 10s;"></i> MOOTELU TRANG</a>
+        <a href="#" class="brand"><i class="fa-solid fa-dharmachakra fa-spin" style="font-size: 1.4rem; --fa-animation-duration: 15s; color: var(--gold-primary);"></i> MOOTELU TRANG</a>
         <div class="menu">
             <a href="#places">สถานที่มงคล</a>
             <a href="#lucky">เสี่ยงทาย</a>
@@ -344,8 +462,11 @@
 
     <header>
         <div class="hero-bg-layer"></div>
-        <h1 class="hero-title" data-aos="zoom-out" data-aos-duration="1500">ศรัทธาแห่งเมืองตรัง</h1>
-        <div class="hero-subtitle" data-aos="fade-up" data-aos-delay="500">Spiritual Journey of Trang</div>
+        <div style="z-index: 2; position: relative;">
+            <p style="color: var(--gold-light); letter-spacing: 3px; font-size: 0.9rem; margin-bottom: 10px; opacity: 0.8;" data-aos="fade-down">ดินแดนแห่งความศักดิ์สิทธิ์</p>
+            <h1 class="hero-title" data-aos="zoom-out" data-aos-duration="1500">ศรัทธาแห่งเมืองตรัง</h1>
+            <div class="hero-subtitle" data-aos="fade-up" data-aos-delay="500">Spiritual Journey of Trang</div>
+        </div>
         <div class="scroll-indicator"></div>
     </header>
 
@@ -354,55 +475,104 @@
         <div id="places">
             <div class="section-head" data-aos="fade-up">
                 <h2>พิกัดมงคล ๙ แห่ง</h2>
-                <p style="color:#888; font-weight:300;">สักการะเพื่อความเป็นสิริมงคล พลิกฟื้นดวงชะตา</p>
+                <p>สักการะเพื่อความเป็นสิริมงคล พลิกฟื้นดวงชะตา</p>
             </div>
 
             <div class="grid" id="cardGrid">
-                <!-- Javascript will render 3D cards here -->
+                <!-- Javascript will render Cards here -->
             </div>
         </div>
 
         <!-- Lucky Widget -->
         <div id="lucky" class="lucky-widget" data-aos="fade-up">
             <div style="position: relative; z-index: 2;">
-                <h2 style="font-family:'Charm'; font-size:2.5rem; color:var(--gold-primary); margin-bottom:10px;">เสี่ยงทายเลขมงคล</h2>
-                <p style="color:#aaa; margin-bottom:20px;">ตั้งจิตอธิษฐาน แล้วกดปุ่มเพื่อรับเลขนำโชคประจำวัน</p>
+                <i class="fa-solid fa-star-of-david" style="color: var(--accent-red); font-size: 2rem; margin-bottom: 15px; opacity: 0.7;"></i>
+                <h2 style="font-family:'Charm'; font-size:3rem; color:var(--gold-primary); margin-bottom:10px;">เสี่ยงทายเลขมงคล</h2>
+                <p style="color:#aaa; margin-bottom:30px; font-weight: 300;">ตั้งจิตอธิษฐานถึงสิ่งที่ปรารถนา แล้วกดปุ่มเพื่อรับเลขนำโชคประจำวันของคุณ</p>
                 <div id="luckyResult">? ?</div>
                 <button class="lucky-btn" onclick="randomLuckyNumber()">ขอมอบเลขมงคลให้ข้าพเจ้า</button>
             </div>
         </div>
 
-        <div id="about" style="margin-top: 100px; text-align: center;" data-aos="fade-up">
-            <i class="fa-solid fa-kaaba" style="font-size: 3rem; color: var(--gold-dark); margin-bottom: 20px;"></i>
-            <h3 style="font-family:'Cinzel'; color:var(--text-main); font-size: 1.5rem; margin-bottom: 15px;">THE LEGEND</h3>
-            <p style="max-width: 600px; margin: 0 auto; color: #777; line-height: 1.8;">
+        <div id="about" style="margin-top: 150px; text-align: center;" data-aos="fade-up">
+            <i class="fa-solid fa-kaaba" style="font-size: 3rem; color: var(--gold-dark); margin-bottom: 25px;"></i>
+            <h3 style="font-family:'Cinzel'; color:var(--text-main); font-size: 1.8rem; margin-bottom: 20px; letter-spacing: 2px;">THE LEGEND</h3>
+            <p style="max-width: 650px; margin: 0 auto; color: #888; line-height: 1.7; font-weight: 300;">
                 รวบรวมสถานที่ศักดิ์สิทธิ์คู่บ้านคู่เมืองตรัง จากศาลเจ้าเก่าแก่สู่วัดวาอารามที่งดงาม 
-                เพื่อให้ผู้มีจิตศรัทธาได้เดินทางมากราบไหว้ขอพร เสริมสร้างพลังใจและความสำเร็จในชีวิต
+                เพื่อให้ผู้มีจิตศรัทธาได้เดินทางมากราบไหว้ขอพร เสริมสร้างพลังใจและความสำเร็จในชีวิต 
+                แต่ละสถานที่มีเรื่องเล่าขานสืบต่อกันมาอย่างยาวนาน ถึงความศักดิ์สิทธิ์และปาฏิหาริย์ที่เกิดขึ้นจริง
             </p>
-            <div style="margin-top: 40px; color: var(--gold-dark);">
-                จัดทำโดย: สุลาวรรณ์ เพ็งเผา | 062-735-8847
+            
+            <!-- Creator Section -->
+            <div class="creator-badge" data-aos="zoom-in" data-aos-delay="200">
+                <h4 style="font-family: 'Charm'; font-size: 2rem; color: var(--gold-primary); margin-bottom: 10px;">ผู้จัดทำ</h4>
+                <p style="font-size: 1.4rem; color: #fff; margin-bottom: 15px; font-weight: 600;">คุณสุลาวรรณ์ เพ็งเผา</p>
+                <div style="width: 50px; height: 1px; background: var(--gold-dark); margin: 0 auto 15px auto;"></div>
+                <div style="font-size: 1rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 8px;">
+                    <div><i class="fa-solid fa-envelope" style="color: var(--gold-dark); margin-right: 10px;"></i> Sulawan8847@gmail.com</div>
+                    <div><i class="fa-solid fa-phone" style="color: var(--gold-dark); margin-right: 10px;"></i> 062-735-8847</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 40px; color: var(--gold-dark); opacity: 0.4; font-size: 0.8rem;">
+               
             </div>
         </div>
 
     </div>
 
 
-    <!-- Modal Layout -->
+    <!-- Improved Modal Layout with More Info -->
     <div class="modal" id="modal">
         <div class="modal-content">
-            <div class="corner tl"></div><div class="corner br"></div>
-            <div class="close-modal" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></div>
+            <!-- Decorative Corners -->
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+            
+            <!-- Close Button (Updated) -->
+            <div class="close-modal-btn" onclick="closeModal()">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
             
             <div class="modal-img">
                 <img id="mImg" src="">
-                <div style="position:absolute; bottom:0; left:0; width:100%; height:40%; background:linear-gradient(to top, #0a0a0a, transparent);"></div>
+                <div style="position:absolute; bottom:0; left:0; width:100%; height:50%; background:linear-gradient(to top, #1a1a1a, transparent);"></div>
             </div>
             
             <div class="modal-text">
-                <span id="mTag" style="color:var(--gold-primary); font-family:'Cinzel'; font-size:0.9rem; letter-spacing:2px; margin-bottom:10px;">TAG</span>
-                <h2 id="mTitle" style="font-family:'Charm'; color: #fff; font-size: 3rem; line-height:1; margin-bottom: 20px;">Title</h2>
-                <div style="width: 50px; height: 2px; background: var(--gold-dark); margin-bottom: 20px;"></div>
-                <p id="mDesc" style="color: #ccc; line-height: 1.8; font-weight: 300;">Description...</p>
+                <span id="mTag" style="color:var(--gold-primary); font-family:'Cinzel'; font-size:0.8rem; letter-spacing:3px; margin-bottom:15px; display:block;">TAG</span>
+                <h2 id="mTitle" style="font-family:'Charm'; color: #fff; font-size: 2.8rem; line-height:1.1; margin-bottom: 25px; text-shadow: 0 0 10px rgba(0,0,0,0.5);">Title</h2>
+                
+                <div style="width: 60px; height: 3px; background: var(--gold-dark); margin-bottom: 30px;"></div>
+                
+                <!-- Description text wide layout -->
+                <p id="mDesc" style="color: #ccc; line-height: 1.7; font-weight: 300; text-align: justify; margin-bottom: 20px; font-size: 1rem;">
+                    Description...
+                </p>
+
+                <!-- Additional Info Block (3 Columns) -->
+                <div class="modal-info-group">
+                    <div class="info-item">
+                        <i class="fa-regular fa-clock" style="color:var(--gold-primary);"></i>
+                        <h4>เวลา & พิกัด</h4>
+                        <p id="mTime" style="font-size:0.85rem; color:#bbb;">08:00 - 17:00 น.</p>
+                        <p id="mLoc" style="margin-top:5px;">เมืองตรัง</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fa-solid fa-gift" style="color:var(--gold-primary);"></i>
+                        <h4>ของไหว้แนะนำ</h4>
+                        <p id="mOfferings">ผลไม้มงคล, พวงมาลัย</p>
+                    </div>
+
+                    <div class="info-item">
+                        <i class="fa-solid fa-hand-sparkles" style="color:var(--gold-primary);"></i>
+                        <h4>เคล็ดลับมูเตลู</h4>
+                        <p id="mTip">ตั้งจิตอธิษฐานให้มั่น</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -419,32 +589,113 @@
             else nav.classList.remove('scrolled');
         });
 
-        // Data
+        // Expanded Data with More Mootelu Details
         const places = [
-            { name: "ศาลเจ้าท่ามกงเยี่ย", img: "image/mokongyeas.jpg", tag: "HEALING & FAMILY", desc: "ศูนย์รวมจิตใจชาวตรัง โดดเด่นเรื่องการรักษาโรคภัยไข้เจ็บและการขอบุตร ผู้คนนิยมพาบุตรหลานมาฝากตัวเป็นลูกบุญธรรมเพื่อความร่มเย็นเป็นสุข" },
-            { name: "ศาลเจ้ากิวอ่องเอี่ย", img: "image/kiwongee.jpg", tag: "PURIFICATION", desc: "ต้นกำเนิดประเพณีถือศีลกินเจอันยิ่งใหญ่ ศักดิ์สิทธิ์ในการปัดเป่าสิ่งชั่วร้าย เสริมชะตาชีวิตให้พบเจอแต่ความสว่างไสว" },
-            { name: "ศาลหลักเมืองตรัง", img: "image/themaincourt.jpg", tag: "STABILITY", desc: "ตั้งอยู่ที่ควนธานี เป็นหลักชัยของเมือง เหมาะสำหรับผู้ที่ต้องการความมั่นคงในหน้าที่การงาน และบารมีในการปกครองคน" },
-            { name: "ศาลเจ้าเปากง", img: "image/baokongshrine.jpg", tag: "JUSTICE", desc: "เทพเจ้าแห่งความซื่อสัตย์ยุติธรรม ขอพรให้ชนะคดีความ ขจัดคนพาลและศัตรูหมู่มารออกจากชีวิต" },
-            { name: "วิหารคริสต์ตรัง", img: "image/church.jpg", tag: "LOVE & PEACE", desc: "สถาปัตยกรรมสีเหลืองนวลอันงดงาม ให้บรรยากาศสงบสุข เหมาะแก่การขอพรเรื่องความรักที่มั่นคงและครอบครัวที่อบอุ่น" },
-            { name: "วัดกะพังสุรินทร์", img: "image/kaphangsurin.jpg", tag: "PROSPERITY", desc: "พระอารามหลวงคู่เมืองตรัง สถาปัตยกรรมงดงาม เหมาะแก่การทำบุญใหญ่เพื่อเสริมบารมีและโชคลาภวาสนา" },
-            { name: "ศาลพระพิฆเนศ", img: "image/ganesha.jpg", tag: "SUCCESS", desc: "เทพเจ้าแห่งปัญญาและศิลปวิทยาการ ผู้ขจัดอุปสรรคทั้งปวง เหมาะสำหรับคนทำงาน ศิลปิน และนักเรียนนักศึกษา" },
-            { name: "เจ้าแม่กวนอิม", img: "image/guanyin.jpg", tag: "MERCY", desc: "พระโพธิสัตว์กวนอิมบนยอดเขาหนองยวน ประทานพรเรื่องความเมตตา การค้าขายคล่องตัว และความร่มเย็นเป็นสุข" },
-            { name: "วัดสาริการาม", img: "image/sarikaram.jpg", tag: "PROTECTION", desc: "สถานที่ศักดิ์สิทธิ์สำหรับการแก้ชง สะเดาะเคราะห์ ต่อชะตา พลิกจากร้ายให้กลายเป็นดี" }
+            { 
+                name: "ศาลเจ้าท่ามกงเยี่ย", 
+                img: "image/mokongyeas.jpg", 
+                tag: "HEALING & FAMILY", 
+                time: "06:00 - 18:00 น.",
+                loc: "ถ.เพลินพิทักษ์ ต.ทับเที่ยง",
+                desc: "ศูนย์รวมจิตใจชาวตรัง โดดเด่นเรื่องการรักษาโรคภัยไข้เจ็บและการขอบุตร ผู้คนนิยมพาบุตรหลานมาฝากตัวเป็นลูกบุญธรรมเพื่อความร่มเย็นเป็นสุข เชื่อกันว่าท่านมีความเมตตาสูงมาก ใครเจ็บไข้ได้ป่วยมาขอพรก็มักจะหายวันหายคืน เป็นที่พึ่งทางใจยามยากลำบาก",
+                offerings: "ส้มมงคล 4 ผล, น้ำชา, ขนมจันอับ",
+                tip: "หากมีบุตรยาก ให้ขอลูกบุญธรรม แล้วนำไข่ต้มย้อมสีแดงมาถวาย"
+            },
+            { 
+                name: "ศาลเจ้ากิวอ่องเอี่ย", 
+                img: "image/kiwongee.jpg", 
+                tag: "PURIFICATION", 
+                time: "07:00 - 17:30 น.",
+                loc: "ถ.ท่ากลาง ต.ทับเที่ยง",
+                desc: "ต้นกำเนิดประเพณีถือศีลกินเจอันยิ่งใหญ่ ศักดิ์สิทธิ์ในการปัดเป่าสิ่งชั่วร้าย เสริมชะตาชีวิตให้พบเจอแต่ความสว่างไสว ผู้ที่ดวงตกหรือเจออุปสรรคในชีวิตมักจะมาขอพรที่นี่เพื่อเริ่มต้นชีวิตใหม่ที่สดใสกว่าเดิม",
+                offerings: "ผลไม้ 5 อย่าง, ธูปเทียนทอง",
+                tip: "ควรชำระร่างกายให้สะอาดและงดเนื้อสัตว์ก่อนเข้ากราบไหว้เพื่อความบริสุทธิ์"
+            },
+            { 
+                name: "ศาลหลักเมืองตรัง", 
+                img: "image/themaincourt.jpg", 
+                tag: "STABILITY", 
+                time: "ตลอด 24 ชั่วโมง",
+                loc: "ต.ควนธานี อ.กันตัง",
+                desc: "ตั้งอยู่ที่ควนธานี เป็นหลักชัยของเมือง เหมาะสำหรับผู้ที่ต้องการความมั่นคงในหน้าที่การงาน และบารมีในการปกครองคน ข้าราชการหรือผู้บริหารมักจะมากราบไหว้เพื่อความเป็นสิริมงคลในการทำงานให้ราบรื่น ไร้อุปสรรค",
+                offerings: "พวงมาลัยดาวเรือง, ผ้าแพร 3 สี",
+                tip: "ผูกผ้าแพร 3 สีที่เสาหลักเมือง แล้วอธิษฐานขอความมั่นคงหนักแน่น"
+            },
+            { 
+                name: "ศาลเจ้าเปากง", 
+                img: "image/baokongshrine.jpg", 
+                tag: "JUSTICE", 
+                time: "08:00 - 17:00 น.",
+                loc: "ต.ทับเที่ยง อ.เมือง",
+                desc: "เทพเจ้าแห่งความซื่อสัตย์ยุติธรรม ขอพรให้ชนะคดีความ ขจัดคนพาลและศัตรูหมู่มารออกจากชีวิต ใครที่ถูกใส่ร้ายป้ายสีหรือโดนกลั่นแกล้ง มาขอพรที่นี่จะช่วยให้ความจริงปรากฏและผ่านพ้นวิกฤตไปได้ด้วยดี",
+                offerings: "น้ำชา, ผลไม้สีดำ (เช่น องุ่นดำ)",
+                tip: "เขียนชื่อศัตรูหรืออุปสรรคลงในกระดาษแล้วอธิษฐานขอให้ท่านเปาบุ้นจิ้นช่วยขจัดปัดเป่า"
+            },
+            { 
+                name: "วิหารคริสต์ตรัง", 
+                img: "image/church.jpg", 
+                tag: "LOVE & PEACE", 
+                time: "09:00 - 16:00 น.",
+                loc: "ถ.ห้วยยอด ต.ทับเที่ยง",
+                desc: "สถาปัตยกรรมสีเหลืองนวลอันงดงาม ให้บรรยากาศสงบสุข เหมาะแก่การขอพรเรื่องความรักที่มั่นคงและครอบครัวที่อบอุ่น คู่รักมักมาถ่ายรูปและขอพรให้ความรักยืนยาวปราศจากอุปสรรค เป็นสถานที่ที่เปี่ยมไปด้วยพลังแห่งความรักและความหวัง",
+                offerings: "ดอกกุหลาบขาว, เทียนหอม",
+                tip: "อธิษฐานขอพรเงียบๆ ด้วยใจที่สงบ และระลึกถึงความรักที่บริสุทธิ์"
+            },
+            { 
+                name: "วัดกะพังสุรินทร์", 
+                img: "image/kaphangsurin.jpg", 
+                tag: "PROSPERITY", 
+                time: "05:00 - 19:00 น.",
+                loc: "ถ.เวียนกะพัง ต.ทับเที่ยง",
+                desc: "พระอารามหลวงคู่เมืองตรัง สถาปัตยกรรมงดงาม เหมาะแก่การทำบุญใหญ่เพื่อเสริมบารมีและโชคลาภวาสนา ภายในมีความร่มรื่น สงบ เหมาะแก่การปฏิบัติธรรมและนั่งสมาธิเพื่อเจริญสติ เพื่อดึงดูดสิ่งดีๆ เข้ามาในชีวิต",
+                offerings: "สังฆทาน, ดอกบัว",
+                tip: "เดินเวียนเทียนรอบอุโบสถ 3 รอบ พร้อมสวดมนต์บทอิติปิโสฯ"
+            },
+            { 
+                name: "ศาลพระพิฆเนศ", 
+                img: "image/ganesha.jpg", 
+                tag: "SUCCESS", 
+                time: "08:00 - 18:00 น.",
+                loc: "ต.ทับเที่ยง อ.เมือง",
+                desc: "เทพเจ้าแห่งปัญญาและศิลปวิทยาการ ผู้ขจัดอุปสรรคทั้งปวง เหมาะสำหรับคนทำงาน ศิลปิน และนักเรียนนักศึกษาที่ต้องการความสำเร็จในการสอบหรือการสร้างสรรค์ผลงานใหม่ๆ ท่านจะประทานปัญญาญาณให้ลุล่วง",
+                offerings: "ขนมลาดู, นมสด, กล้วยน้ำว้า",
+                tip: "กระซิบขอพรที่หูหนูบริวาร (มุสิกะ) แล้วปิดหูอีกข้างไว้ เพื่อฝากคำขอไปถึงพระพิฆเนศ"
+            },
+            { 
+                name: "เจ้าแม่กวนอิม", 
+                img: "image/guanyin.jpg", 
+                tag: "MERCY", 
+                time: "06:00 - 18:00 น.",
+                loc: "เขาหนองยวน ต.ทับเที่ยง",
+                desc: "พระโพธิสัตว์กวนอิมบนยอดเขาหนองยวน ประทานพรเรื่องความเมตตา การค้าขายคล่องตัว และความร่มเย็นเป็นสุข สามารถมองเห็นวิวเมืองตรังได้จากมุมสูง เป็นจุดที่ได้รับพลังจากธรรมชาติอย่างเต็มเปี่ยม",
+                offerings: "ดอกบัวสีขาว, น้ำสะอาด, สร้อยมุกเทียม",
+                tip: "งดทานเนื้อวัวในวันที่ไปไหว้ และสวดคาถาบูชาเจ้าแม่กวนอิม 9 จบ"
+            },
+            { 
+                name: "วัดสาริการาม", 
+                img: "image/sarikaram.jpg", 
+                tag: "PROTECTION", 
+                time: "07:00 - 17:00 น.",
+                loc: "ต.โคกหล่อ อ.เมือง",
+                desc: "สถานที่ศักดิ์สิทธิ์สำหรับการแก้ชง สะเดาะเคราะห์ ต่อชะตา พลิกจากร้ายให้กลายเป็นดี เชื่อกันว่าใครที่ปีชงหรือดวงตก หากมาทำบุญที่นี่จะช่วยผ่อนหนักให้เป็นเบา และเสริมดวงชะตาให้แข็งแกร่งขึ้น",
+                offerings: "ชุดไหว้แก้ชง, น้ำมันเติมตะเกียง",
+                tip: "ทำบุญโลงศพหรือเติมน้ำมันตะเกียง เพื่อต่อชะตาแสงสว่างแห่งชีวิต"
+            }
         ];
 
         // Render Cards with 3D Tilt Logic
         const grid = document.getElementById("cardGrid");
         places.forEach((p, i) => {
             const cardHTML = `
-                <div class="card-wrapper" data-aos="fade-up" data-aos-delay="${i*100}">
+                <div class="card-wrapper" data-aos="fade-up" data-aos-delay="${i*50}">
                     <div class="card" onclick="openModal(${i})">
                         <div class="card-img-box">
-                            <img src="${p.img}" alt="${p.name}">
+                            <img src="${p.img}" alt="${p.name}" onerror="this.src='https://images.unsplash.com/photo-1599707367072-cd6ad6cb3d2e?q=80&w=2070&auto=format&fit=crop'">
                         </div>
                         <div class="card-body">
                             <span class="card-tag">${p.tag}</span>
                             <h3>${p.name}</h3>
-                            <p>${p.desc.substring(0, 80)}...</p>
+                            <p>${p.desc}</p>
                         </div>
                     </div>
                 </div>
@@ -452,7 +703,7 @@
             grid.innerHTML += cardHTML;
         });
 
-        // 3D Tilt Effect Script
+        // 3D Tilt Effect
         const cards = document.querySelectorAll('.card');
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -463,7 +714,7 @@
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
                 
-                const rotateX = ((y - centerY) / centerY) * -5; // Max rotation deg
+                const rotateX = ((y - centerY) / centerY) * -5;
                 const rotateY = ((x - centerX) / centerX) * 5;
 
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
@@ -478,10 +729,20 @@
         const modal = document.getElementById("modal");
         function openModal(index) {
             const p = places[index];
-            document.getElementById("mImg").src = p.img;
+            const imgEl = document.getElementById("mImg");
+            imgEl.src = p.img;
+            // Keep fallback just in case
+            imgEl.onerror = function() { this.src = 'https://images.unsplash.com/photo-1599707367072-cd6ad6cb3d2e?q=80&w=2070&auto=format&fit=crop'; };
+            
             document.getElementById("mTitle").innerText = p.name;
             document.getElementById("mTag").innerText = p.tag;
             document.getElementById("mDesc").innerText = p.desc;
+            document.getElementById("mTime").innerText = p.time;
+            document.getElementById("mLoc").innerText = p.loc;
+            
+            // Populate new fields
+            document.getElementById("mOfferings").innerText = p.offerings;
+            document.getElementById("mTip").innerText = p.tip;
             
             modal.style.display = "flex";
             setTimeout(() => { modal.classList.add("show"); }, 10);
@@ -490,33 +751,37 @@
 
         function closeModal() {
             modal.classList.remove("show");
-            setTimeout(() => { modal.style.display = "none"; }, 300);
+            setTimeout(() => { modal.style.display = "none"; }, 400);
             document.body.style.overflow = "auto";
         }
         
+        // Close when clicking outside content
         window.onclick = (e) => { if (e.target == modal) closeModal(); }
 
         // Lucky Number Logic
         function randomLuckyNumber() {
-            const num1 = Math.floor(Math.random() * 10);
-            const num2 = Math.floor(Math.random() * 10);
             const el = document.getElementById("luckyResult");
+            el.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="font-size:2rem; color:var(--gold-dark);"></i>';
             
-            // Animation loop
-            let i = 0;
-            const interval = setInterval(() => {
-                el.innerText = Math.floor(Math.random() * 99);
-                i++;
-                if (i > 10) {
-                    clearInterval(interval);
-                    el.innerText = `${num1}${num2}`;
-                    el.style.color = "#fff";
-                    el.style.textShadow = "0 0 30px #D4AF37";
-                }
-            }, 50);
+            setTimeout(() => {
+                const num1 = Math.floor(Math.random() * 10);
+                const num2 = Math.floor(Math.random() * 10);
+                
+                // Animation loop
+                let i = 0;
+                const interval = setInterval(() => {
+                    el.innerText = Math.floor(Math.random() * 99);
+                    i++;
+                    if (i > 15) {
+                        clearInterval(interval);
+                        el.innerHTML = `${num1}${num2}`;
+                        el.style.color = "#FFE5B4";
+                    }
+                }, 50);
+            }, 500);
         }
 
-        /* --- Sacred Smoke Canvas Animation --- */
+        /* --- Improved Sacred Smoke/Particle Animation --- */
         const canvas = document.getElementById("sacred-canvas");
         const ctx = canvas.getContext("2d");
         let particles = [];
@@ -530,38 +795,40 @@
 
         class Particle {
             constructor() {
+                this.reset(true);
+            }
+            reset(initial = false) {
                 this.x = Math.random() * canvas.width;
-                this.y = canvas.height + Math.random() * 100;
-                this.vx = (Math.random() - 0.5) * 1.5;
-                this.vy = Math.random() * -1.5 - 0.5;
-                this.size = Math.random() * 3 + 1;
+                this.y = initial ? Math.random() * canvas.height : canvas.height + 50;
+                this.vx = (Math.random() - 0.5) * 0.8;
+                this.vy = (Math.random() * -1) - 0.2; // Float up slowly
+                this.size = Math.random() * 2 + 0.5;
                 this.opacity = Math.random() * 0.5;
-                this.life = Math.random() * 100 + 100;
+                this.fadeRate = Math.random() * 0.002 + 0.001;
             }
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
-                this.life--;
-                this.opacity -= 0.002;
-                if (this.life <= 0 || this.opacity <= 0) this.reset();
-            }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = canvas.height + 50;
-                this.vx = (Math.random() - 0.5) * 1;
-                this.vy = Math.random() * -1 - 0.5;
-                this.opacity = Math.random() * 0.4;
-                this.life = Math.random() * 100 + 100;
+                this.opacity -= this.fadeRate;
+                
+                // Mouse interaction hint (optional, subtle push)
+                // this.x += (Math.random() - 0.5) * 0.5;
+
+                if (this.opacity <= 0 || this.y < -50) this.reset();
             }
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`; // Gold color
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = "#D4AF37";
                 ctx.fill();
+                ctx.shadowBlur = 0; // Reset
             }
         }
 
-        for (let i = 0; i < 60; i++) particles.push(new Particle());
+        // Increase particle count for denser feel
+        for (let i = 0; i < 100; i++) particles.push(new Particle());
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
