@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ปฏิทินงานบุญ - Mootelu Trang</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Charm:wght@700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .timeline {
+            position: relative; max-width: 900px; margin: 0 auto;
+        }
+        .timeline::after {
+            content: ''; position: absolute; width: 2px; background: var(--gold-dark);
+            top: 0; bottom: 0; left: 50%; margin-left: -1px; opacity: 0.3;
+        }
+        .event-box {
+            padding: 10px 40px; position: relative; width: 50%; box-sizing: border-box;
+        }
+        .left { left: 0; text-align: right; }
+        .right { left: 50%; }
+        
+        .content {
+            padding: 20px 30px; background: rgba(20,20,20,0.9);
+            border: 1px solid rgba(212,175,55,0.3); border-radius: 8px;
+            position: relative; transition: 0.3s;
+        }
+        .content:hover { border-color: var(--gold-primary); transform: scale(1.02); }
+        
+        .date-badge {
+            background: var(--gold-primary); color: #000; display: inline-block;
+            padding: 5px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 10px;
+        }
+        
+        /* Dot */
+        .event-box::after {
+            content: ''; position: absolute; width: 20px; height: 20px;
+            right: -10px; background: #000; border: 4px solid var(--gold-primary);
+            top: 25px; border-radius: 50%; z-index: 1;
+        }
+        .right::after { left: -10px; }
+
+        @media (max-width: 600px) {
+            .timeline::after { left: 31px; }
+            .event-box { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .left { text-align: left; }
+            .right { left: 0; }
+            .event-box::after { left: 21px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="sacred-canvas"></canvas>
+    <nav>
+        <a href="index.html" class="brand"><i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก</a>
+    </nav>
+
+    <div class="container" style="padding-top: 120px;">
+        <div class="section-head">
+            <h2>ปฏิทินสายมู ๒๕๖๗</h2>
+            <p>วันไหว้ วันพระ และเทศกาลศักดิ์สิทธิ์เมืองตรัง</p>
+        </div>
+
+        <div class="timeline">
+            <div class="event-box left" data-aos="fade-right">
+                <div class="content">
+                    <span class="date-badge">9 - 11 กุมภาพันธ์</span>
+                    <h3 style="color: #fff; font-family:'Charm'; font-size:1.5rem;">เทศกาลตรุษจีน</h3>
+                    <p style="color:#ccc; font-size:0.9rem;">ไหว้ขอพรเทพเจ้าไฉ่ซิงเอี๊ย ณ ศาลเจ้าท่ามกงเยี่ย เพื่อความมั่งคั่งร่ำรวยตลอดปี</p>
+                </div>
+            </div>
+
+            <div class="event-box right" data-aos="fade-left">
+                <div class="content">
+                    <span class="date-badge">เมษายน</span>
+                    <h3 style="color: #fff; font-family:'Charm'; font-size:1.5rem;">ประเพณีไหว้เช็งเม้ง</h3>
+                    <p style="color:#ccc; font-size:0.9rem;">รำลึกถึงบรรพบุรุษ เป็นช่วงเวลาที่ลูกหลานชาวตรังเชื้อสายจีนรวมตัวกันแสดงความกตัญญู</p>
+                </div>
+            </div>
+
+            <div class="event-box left" data-aos="fade-right">
+                <div class="content">
+                    <span class="date-badge">ตุลาคม (แรม 1 ค่ำ เดือน 9 จีน)</span>
+                    <h3 style="color: #fff; font-family:'Charm'; font-size:1.5rem;">ประเพณีถือศีลกินเจ</h3>
+                    <p style="color:#ccc; font-size:0.9rem;">งานบุญที่ยิ่งใหญ่ที่สุดของตรัง ณ ศาลเจ้ากิวอ่องเอี่ย ขบวนแห่พระออกโปรดสาธุชน ผู้คนนุ่งขาวห่มขาวทั่วเมือง</p>
+                </div>
+            </div>
+
+            <div class="event-box right" data-aos="fade-left">
+                <div class="content">
+                    <span class="date-badge">พฤศจิกายน</span>
+                    <h3 style="color: #fff; font-family:'Charm'; font-size:1.5rem;">งานลากพระ (ชักพระ)</h3>
+                    <p style="color:#ccc; font-size:0.9rem;">ประเพณีเก่าแก่ทางพุทธศาสนา มีการลากเรือพระจากวัดต่างๆ มารวมตัวกัน แข่งขันตีกลองตะโพน</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

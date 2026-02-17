@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ฝากคำอธิษฐาน - Mootelu Trang</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Charm:wght@700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .wish-container {
+            max-width: 800px; margin: 0 auto;
+        }
+        .wish-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(212,175,55,0.2);
+            padding: 25px; margin-bottom: 20px;
+            border-radius: 8px; position: relative;
+            animation: floatUp 1s ease-out;
+        }
+        .wish-card::before {
+            content: '\f6a9'; font-family: "Font Awesome 6 Free"; font-weight: 900;
+            position: absolute; right: 20px; top: 20px;
+            font-size: 2rem; color: var(--gold-dark); opacity: 0.2;
+        }
+        @keyframes floatUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .submit-btn {
+            background: var(--gold-primary); color: #000;
+            border: none; padding: 12px 30px; font-size: 1.1rem;
+            cursor: pointer; font-family: 'Sarabun'; font-weight: 600;
+            width: 100%; border-radius: 4px; transition: 0.3s;
+        }
+        .submit-btn:hover { background: #fff; box-shadow: 0 0 15px var(--gold-primary); }
+    </style>
+</head>
+<body>
+    <canvas id="sacred-canvas"></canvas>
+
+    <nav>
+        <a href="index.html" class="brand"><i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก</a>
+    </nav>
+
+    <div class="container" style="padding-top: 120px;">
+        <div class="section-head" data-aos="fade-down">
+            <h2>ฝากคำอธิษฐาน</h2>
+            <p>ตั้งจิตให้มั่น เขียนคำขอพร ฝากไว้ ณ ดินแดนศักดิ์สิทธิ์</p>
+        </div>
+
+        <div class="wish-container">
+            <div class="wish-form" data-aos="fade-up" style="background: rgba(0,0,0,0.6); padding: 40px; border: 1px solid var(--gold-dark); margin-bottom: 50px;">
+                <div class="input-group">
+                    <label>ชื่อ - นามสกุล (หรือนามแฝง)</label>
+                    <input type="text" id="wName" placeholder="ระบุชื่อของท่าน...">
+                </div>
+                <div class="input-group">
+                    <label>คำอธิษฐาน</label>
+                    <textarea id="wText" rows="4" placeholder="ข้าพเจ้าขอตั้งจิตอธิษฐาน..."></textarea>
+                </div>
+                <button class="submit-btn" onclick="submitWish()">ส่งคำอธิษฐาน <i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+
+            <h3 style="color:var(--gold-primary); margin-bottom: 20px; font-family:'Charm'; font-size: 1.8rem;">คำอธิษฐานล่าสุด</h3>
+            <div id="wishList">
+                <div class="wish-card">
+                    <h4 style="color:var(--gold-light); margin-bottom:10px;">คุณสมชาย ใจดี</h4>
+                    <p style="color:#ccc; font-weight:300;">ขอให้ปีนี้ครอบครัวมีความสุข สุขภาพแข็งแรง การงานเจริญก้าวหน้า สาธุ</p>
+                    <small style="color:var(--gold-dark); display:block; margin-top:10px;"><i class="fa-regular fa-clock"></i> เมื่อสักครู่</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+    <script>
+        function submitWish() {
+            const name = document.getElementById('wName').value;
+            const text = document.getElementById('wText').value;
+            
+            if(name && text) {
+                const list = document.getElementById('wishList');
+                const div = document.createElement('div');
+                div.className = 'wish-card';
+                div.innerHTML = `
+                    <h4 style="color:var(--gold-light); margin-bottom:10px;">${name}</h4>
+                    <p style="color:#ccc; font-weight:300;">${text}</p>
+                    <small style="color:var(--gold-dark); display:block; margin-top:10px;"><i class="fa-regular fa-clock"></i> เมื่อสักครู่</small>
+                `;
+                list.prepend(div);
+                
+                // Reset form
+                document.getElementById('wName').value = '';
+                document.getElementById('wText').value = '';
+                alert("รับคำอธิษฐานแล้ว ขอให้สมหวังดั่งตั้งใจ");
+            } else {
+                alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ดวง 12 นักษัตร - Mootelu Trang</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Charm:wght@700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .zodiac-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .z-card {
+            background: rgba(30,30,30,0.8); border: 1px solid #333;
+            border-radius: 8px; padding: 25px; text-align: center;
+            cursor: pointer; transition: 0.4s; position: relative; overflow: hidden;
+        }
+        .z-card:hover {
+            border-color: var(--gold-primary); background: #1a1a1a;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(212,175,55,0.15);
+        }
+        .z-icon {
+            font-size: 3rem; color: var(--gold-dark); margin-bottom: 15px;
+            transition: 0.4s;
+        }
+        .z-card:hover .z-icon { color: var(--gold-light); transform: scale(1.1); }
+        .bad-luck {
+            position: absolute; top: 10px; right: 10px;
+            background: var(--accent-red); color: #fff; font-size: 0.7rem;
+            padding: 2px 8px; border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="sacred-canvas"></canvas>
+    <nav>
+        <a href="index.html" class="brand"><i class="fa-solid fa-arrow-left"></i> กลับหน้าหลัก</a>
+    </nav>
+
+    <div class="container" style="padding-top: 120px;">
+        <div class="section-head">
+            <h2>ดวงชะตา 12 นักษัตร</h2>
+            <p>ปี 2569 : ปีมะเมีย (ม้า)</p>
+        </div>
+
+        <div class="zodiac-grid" id="zodiacGrid">
+            </div>
+    </div>
+
+    <div class="modal" id="zModal">
+        <div class="modal-content" style="max-width: 500px; display: block; text-align: center; border-radius: 12px;">
+            <div class="close-modal-btn" onclick="closeZModal()" style="top:10px; right:10px; width:30px; height:30px;"><i class="fa-solid fa-xmark"></i></div>
+            <div style="padding: 40px;">
+                <i id="zmIcon" class="fa-solid fa-star" style="font-size: 4rem; color: var(--gold-primary); margin-bottom: 20px;"></i>
+                <h2 id="zmTitle" style="color: #fff; font-family:'Charm'; margin-bottom: 15px;">ปีนักษัตร</h2>
+                <p id="zmDesc" style="color: #ccc; line-height: 1.6;">คำทำนาย...</p>
+                <div style="margin-top: 20px; border-top: 1px solid #333; padding-top: 15px;">
+                    <strong style="color: var(--gold-dark);">สถานที่แนะนำแก้เคล็ด:</strong><br>
+                    <span id="zmPlace">วัดสาริการาม</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+    <script>
+        const zodiacs = [
+            { name: "ชวด (หนู)", icon: "fa-solid fa-computer-mouse", desc: "ปีนี้การงานโดดเด่น ผู้ใหญ่เมตตา แต่ระวังเรื่องคำพูด", place: "ศาลเจ้าเปากง" },
+            { name: "ฉลู (วัว)", icon: "fa-solid fa-cow", desc: "เหนื่อยหน่อยแต่คุ้มค่า อดทนแล้วจะสำเร็จ", place: "ศาลพระพิฆเนศ" },
+            { name: "ขาล (เสือ)", icon: "fa-solid fa-cat", desc: "การเงินคล่องตัว มีโชคลาภจากการเดินทาง", place: "ศาลเจ้าท่ามกงเยี่ย" },
+            { name: "เถาะ (กระต่าย)", icon: "fa-solid fa-paw", desc: "ความรักสดใส คนโสดจะเจอคู่ ปีนี้ชีพจรลงเท้า", place: "วิหารคริสต์ตรัง" },
+            { name: "มะโรง (งูใหญ่)", icon: "fa-solid fa-dragon", desc: "เป็นปีแห่งการเปลี่ยนแปลง เลื่อนขั้นเลื่อนตำแหน่ง", place: "ศาลหลักเมืองตรัง" },
+            { name: "มะเส็ง (งูเล็ก)", icon: "fa-solid fa-staff-snake", desc: "ระวังสุขภาพเล็กๆ น้อยๆ หมั่นทำบุญโลงศพ", place: "วัดสาริการาม (แก้ชง)" },
+            { name: "มะเมีย (ม้า)", icon: "fa-solid fa-horse", desc: "ปีชงร่วม (คัก) ให้ระวังอุบัติเหตุ ใจร้อน", place: "ศาลเจ้ากิวอ่องเอี่ย" },
+            { name: "มะแม (แพะ)", icon: "fa-solid fa-cloud-meatball", desc: "มีเกณฑ์ได้ทรัพย์ก้อนโต แต่ระวังคนยืมเงิน", place: "ศาลเจ้าท่ามกงเยี่ย" },
+            { name: "วอก (ลิง)", icon: "fa-solid fa-lemon", desc: "ปัญญาเฉียบแหลม แก้ไขปัญหาได้ดี เหมาะแก่การลงทุน", place: "ศาลพระพิฆเนศ" },
+            { name: "ระกา (ไก่)", icon: "fa-solid fa-kiwi-bird", desc: "สวยหล่อเลือกได้ เสน่ห์แรง งานบันเทิงรุ่ง", place: "เจ้าแม่กวนอิม" },
+            { name: "จอ (หมา)", icon: "fa-solid fa-dog", desc: "เพื่อนฝูงนำโชคมาให้ งานกลุ่มสำเร็จดี", place: "วัดกะพังสุรินทร์" },
+            { name: "กุน (หมู)", icon: "fa-solid fa-piggy-bank", desc: "กินอิ่มนอนหลับ สุขกายสบายใจ ระวังน้ำหนักขึ้น", place: "ศาลเจ้าท่ามกงเยี่ย" }
+        ];
+
+        const zGrid = document.getElementById('zodiacGrid');
+        zodiacs.forEach((z, i) => {
+            const isChong = (z.name.includes("ชวด") || z.name.includes("มะเมีย")); // สมมติปีชง
+            zGrid.innerHTML += `
+                <div class="z-card" data-aos="zoom-in" data-aos-delay="${i*50}" onclick="openZModal(${i})">
+                    ${isChong ? '<span class="bad-luck">ชง</span>' : ''}
+                    <i class="${z.icon} z-icon"></i>
+                    <h3 style="color:#fff;">${z.name}</h3>
+                </div>
+            `;
+        });
+
+        function openZModal(index) {
+            const data = zodiacs[index];
+            document.getElementById('zmIcon').className = data.icon;
+            document.getElementById('zmIcon').style.fontSize = "4rem";
+            document.getElementById('zmIcon').style.color = "var(--gold-primary)";
+            
+            document.getElementById('zmTitle').innerText = "ปี" + data.name;
+            document.getElementById('zmDesc').innerText = data.desc;
+            document.getElementById('zmPlace').innerText = data.place;
+            
+            const m = document.getElementById('zModal');
+            m.style.display = "flex";
+            setTimeout(() => m.classList.add('show'), 10);
+        }
+
+        function closeZModal() {
+            const m = document.getElementById('zModal');
+            m.classList.remove('show');
+            setTimeout(() => m.style.display = "none", 400);
+        }
+        
+        window.onclick = (e) => { if (e.target == document.getElementById('zModal')) closeZModal(); }
+    </script>
+</body>
+</html>
