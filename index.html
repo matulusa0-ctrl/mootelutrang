@@ -3,165 +3,1073 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mootelu Trang | มูเตลู เมืองตรัง</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Charm:wght@700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Meta Tags สำหรับ SEO และการแชร์ -->
+    <meta name="description" content="Mootelu Trang - คู่มือการท่องเที่ยวเชิงวัฒนธรรมและความเชื่อ เจาะลึก 9 สถานที่ศักดิ์สิทธิ์เมืองตรัง ประวัติศาสตร์ และวิธีไหว้ขอพร">
+    <meta name="keywords" content="มูเตลู, ตรัง, ศาลเจ้า, ขอพร, ท่องเที่ยว, ความเชื่อ, แก้ชง">
+    <meta name="author" content="คุณสุลาวรรณ์ เพ็งเผา">
+    
+    <title>Mootelu Trang | มูเตลู เมืองตรัง (Ultimate Academic Edition)</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Charm:wght@400;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* ==========================================================================
+           1. CSS Variables & Reset
+           ========================================================================== */
+        :root {
+            --bg-deep: #050505;
+            --bg-card: rgba(20, 20, 20, 0.85);
+            --bg-panel: rgba(30, 30, 30, 0.6);
+            --gold-primary: #D4AF37;
+            --gold-light: #F9E29C;
+            --gold-dark: #8A6E24;
+            --gold-gradient: linear-gradient(135deg, #D4AF37, #F9E29C, #8A6E24);
+            --text-main: #EAEAEA;
+            --text-muted: #A0A0A0;
+            --accent-red: #8B0000;
+            --accent-red-light: #ff4d4d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.04) 0%, transparent 60%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(to bottom, var(--gold-dark), var(--gold-primary)); 
+            border-radius: 5px; 
+            border: 2px solid #000;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold-light); }
+
+        /* Canvas Background */
+        #sacred-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+        /* ==========================================================================
+           2. Navigation Bar
+           ========================================================================== */
+        nav { 
+            position: fixed; width: 100%; top: 0; z-index: 1000; padding: 20px 50px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            transition: all 0.4s ease; 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%); 
+        }
+        nav.scrolled { 
+            background: rgba(8, 8, 8, 0.95); backdrop-filter: blur(15px); padding: 15px 50px; 
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2); box-shadow: 0 4px 30px rgba(0,0,0,0.8); 
+        }
+        .brand { 
+            font-family: 'Cinzel', serif; font-size: 1.6rem; 
+            background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            font-weight: 700; letter-spacing: 2px; display: flex; align-items: center; gap: 12px; text-decoration: none; 
+        }
+        .menu { display: flex; gap: 30px; align-items: center; }
+        .menu a { 
+            color: var(--text-main); text-decoration: none; font-weight: 400; transition: 0.3s; 
+            position: relative; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .menu a::after { 
+            content: ''; position: absolute; bottom: -5px; left: 50%; width: 0; height: 1px; 
+            background: var(--gold-primary); transition: 0.3s; transform: translateX(-50%); 
+        }
+        .menu a:hover::after { width: 100%; }
+        .menu a:hover { color: var(--gold-light); text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
+        .nav-btn {
+            border: 1px solid var(--gold-primary); padding: 8px 20px; border-radius: 25px;
+            color: var(--gold-primary) !important; font-weight: 600 !important;
+        }
+        .nav-btn:hover {
+            background: var(--gold-primary); color: #000 !important;
+        }
+
+        /* ==========================================================================
+           3. Hero Section
+           ========================================================================== */
+        header { 
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; 
+            align-items: center; text-align: center; position: relative; overflow: hidden; 
+        }
+        .hero-bg-layer { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background: radial-gradient(circle at center, transparent 20%, #050505 100%), 
+                        url('https://images.unsplash.com/photo-1599707367072-cd6ad6cb3d2e?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; background-position: center; filter: brightness(0.4) saturate(0.3); 
+            z-index: -2; animation: breathe 15s infinite alternate ease-in-out; 
+        }
+        @keyframes breathe { from { transform: scale(1); } to { transform: scale(1.1); } }
+        
+        .hero-title { 
+            font-family: 'Charm', cursive; font-size: clamp(4rem, 10vw, 8rem); line-height: 1.2; 
+            z-index: 1; background: var(--gold-gradient); background-size: 200% auto; 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            animation: shine 5s linear infinite; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.9)); 
+        }
+        @keyframes shine { to { background-position: 200% center; } }
+        
+        .hero-subtitle { 
+            font-size: 1.2rem; letter-spacing: 5px; color: var(--gold-light); margin-top: 20px; 
+            font-weight: 300; border-top: 1px solid rgba(212, 175, 55, 0.4); 
+            border-bottom: 1px solid rgba(212, 175, 55, 0.4); padding: 15px 50px; 
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .scroll-indicator { 
+            position: absolute; bottom: 40px; width: 26px; height: 46px; 
+            border: 2px solid rgba(212, 175, 55, 0.5); border-radius: 20px; 
+            display: flex; justify-content: center; cursor: pointer; transition: 0.3s;
+        }
+        .scroll-indicator:hover { border-color: var(--gold-primary); box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
+        .scroll-indicator::before { 
+            content: ''; width: 4px; height: 8px; background: var(--gold-primary); 
+            border-radius: 2px; margin-top: 8px; animation: scrollDown 2s infinite; 
+        }
+        @keyframes scrollDown { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(20px); } }
+
+        /* ==========================================================================
+           4. Main Layout & Typography
+           ========================================================================== */
+        .container { max-width: 1300px; margin: 0 auto; padding: 120px 20px; position: relative; z-index: 2; }
+        
+        .section-head { text-align: center; margin-bottom: 80px; position: relative; }
+        .section-head h2 { 
+            font-family: 'Charm', cursive; font-size: 4rem; color: var(--gold-primary); 
+            margin-bottom: 15px; text-shadow: 0 5px 20px rgba(212, 175, 55, 0.2); 
+        }
+        .section-head p { font-size: 1.15rem; color: #aaa; letter-spacing: 1.5px; max-width: 700px; margin: 0 auto; }
+        .section-head::after { 
+            content: '✦ ✦ ✦'; display: block; color: var(--gold-dark); font-size: 1.2rem; 
+            margin-top: 25px; letter-spacing: 15px; opacity: 0.6; 
+        }
+
+        /* ==========================================================================
+           5. Auspicious Widget (ฤกษ์มงคลประจำวัน)
+           ========================================================================== */
+        .daily-fortune-widget {
+            background: linear-gradient(160deg, rgba(20,20,20,0.9), rgba(5,5,5,0.95));
+            border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 15px;
+            padding: 40px; margin-bottom: 100px; display: flex; flex-wrap: wrap; gap: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative; overflow: hidden;
+        }
+        .daily-fortune-widget::before {
+            content: '\f0d0'; font-family: "Font Awesome 6 Free"; font-weight: 900;
+            position: absolute; right: -20px; bottom: -40px; font-size: 15rem;
+            color: var(--gold-primary); opacity: 0.03; transform: rotate(-15deg);
+        }
+        .df-left { flex: 1; min-width: 300px; border-right: 1px solid rgba(212, 175, 55, 0.1); padding-right: 30px; }
+        .df-right { flex: 2; min-width: 300px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .df-box { background: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px; border: 1px solid #222; text-align: center; transition: 0.3s; }
+        .df-box:hover { border-color: var(--gold-dark); transform: translateY(-3px); }
+        .df-box i { font-size: 2rem; color: var(--gold-primary); margin-bottom: 10px; }
+        .df-box h4 { color: #888; font-size: 0.9rem; letter-spacing: 1px; margin-bottom: 5px; text-transform: uppercase; }
+        .df-box p { color: var(--gold-light); font-size: 1.2rem; font-weight: 600; font-family: 'Cinzel', serif; }
+        .color-dot { display: inline-block; width: 15px; height: 15px; border-radius: 50%; margin-right: 8px; vertical-align: middle; border: 1px solid #fff; }
+
+        /* ==========================================================================
+           6. Cards Grid (พิกัดมงคล 9 แห่ง)
+           ========================================================================== */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 45px; perspective: 1200px; }
+        .card-wrapper { position: relative; transform-style: preserve-3d; }
+        .card { 
+            background: var(--bg-card); border: 1px solid rgba(212, 175, 55, 0.15); 
+            border-radius: 12px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            cursor: pointer; height: 100%; display: flex; flex-direction: column; position: relative; 
+        }
+        .card:hover { 
+            border-color: var(--gold-primary); box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 25px rgba(212, 175, 55, 0.2); 
+            transform: translateY(-10px); 
+        }
+        .card-img-box { height: 260px; overflow: hidden; position: relative; border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; filter: grayscale(30%) sepia(20%); }
+        .card:hover .card-img-box img { transform: scale(1.15); filter: grayscale(0%) sepia(0%); }
+        .card-img-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 2px;
+        }
+        .card-body { padding: 35px; flex-grow: 1; position: relative; z-index: 2; display: flex; flex-direction: column; }
+        .card-tag { 
+            align-self: flex-start; font-size: 0.75rem; color: #111; background: var(--gold-gradient); 
+            padding: 4px 12px; border-radius: 4px; font-weight: 700; margin-bottom: 15px; letter-spacing: 1px; 
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        .card h3 { font-family: 'Charm', cursive; font-size: 2rem; margin-bottom: 15px; color: #fff; line-height: 1.2; }
+        .card p { color: #ccc; font-weight: 300; line-height: 1.7; font-size: 1rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 20px; }
+        .card-footer { margin-top: auto; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; color: var(--gold-primary); font-size: 0.9rem; font-weight: 500; display: flex; justify-content: space-between; align-items: center; }
+        .card:hover .card-footer { color: var(--gold-light); }
+
+        /* ==========================================================================
+           7. FAQ Section (Accordion)
+           ========================================================================== */
+        .faq-section { max-width: 900px; margin: 150px auto 50px auto; }
+        .accordion-item { background: rgba(20,20,20,0.8); border: 1px solid #333; margin-bottom: 15px; border-radius: 8px; overflow: hidden; transition: 0.3s; }
+        .accordion-item:hover { border-color: var(--gold-dark); }
+        .accordion-header { padding: 20px 30px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 500; color: #fff; background: rgba(0,0,0,0.5); }
+        .accordion-header i { color: var(--gold-primary); transition: 0.3s; }
+        .accordion-item.active .accordion-header i { transform: rotate(180deg); }
+        .accordion-item.active { border-color: var(--gold-primary); box-shadow: 0 0 20px rgba(212, 175, 55, 0.1); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; background: rgba(10,10,10,0.8); }
+        .accordion-content p { padding: 25px 30px; color: #ccc; line-height: 1.8; font-weight: 300; }
+
+        /* ==========================================================================
+           8. Modal (Popup เนื้อหาเจาะลึก)
+           ========================================================================== */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease; }
+        .modal.show { opacity: 1; }
+        .modal-content { 
+            background: #111; border: 1px solid var(--gold-dark); width: 95%; max-width: 1400px; 
+            display: grid; grid-template-columns: 0.5fr 1.5fr; box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9); 
+            transform: translateY(50px) scale(0.95); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            overflow: hidden; position: relative; height: 88vh; border-radius: 12px;
+        }
+        .modal.show .modal-content { transform: translateY(0) scale(1); }
+        
+        .modal-img { position: relative; height: 100%; background: #000; overflow: hidden; }
+        .modal-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 10s linear; }
+        .modal-img:hover img { transform: scale(1.1); opacity: 0.9; }
+        
+        .modal-text { padding: 50px 60px; display: flex; flex-direction: column; background: linear-gradient(160deg, #181818 0%, #0a0a0a 100%); overflow-y: auto; scroll-behavior: smooth; }
+        .modal-text::-webkit-scrollbar { width: 8px; }
+        .modal-text::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 4px; }
+
+        /* TABS CSS (ใน Modal) */
+        .modal-tabs { display: flex; gap: 15px; border-bottom: 1px solid rgba(212, 175, 55, 0.2); margin-bottom: 35px; padding-bottom: 15px; flex-wrap: wrap; position: sticky; top: 0; background: inherit; z-index: 10; padding-top: 10px; }
+        .tab-btn { 
+            background: rgba(0,0,0,0.3); border: 1px solid rgba(212, 175, 55, 0.2); color: #999; 
+            font-family: 'Sarabun', sans-serif; font-size: 1.05rem; padding: 12px 25px; border-radius: 30px; 
+            cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px;
+        }
+        .tab-btn:hover { color: var(--gold-light); background: rgba(212, 175, 55, 0.1); border-color: var(--gold-primary); transform: translateY(-2px); }
+        .tab-btn.active { 
+            color: #000; background: var(--gold-gradient); border-color: var(--gold-primary); 
+            font-weight: 600; box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4); 
+        }
+        
+        .tab-content { display: none; animation: slideUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .tab-content.active { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Information Grid ใน Tab */
+        .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        .info-item { 
+            background: rgba(255, 255, 255, 0.02); padding: 35px; border-radius: 12px; 
+            border: 1px solid rgba(212, 175, 55, 0.1); transition: 0.3s; position: relative; overflow: hidden;
+        }
+        .info-item:hover { border-color: var(--gold-dark); background: rgba(255, 255, 255, 0.04); }
+        .info-item.full { grid-column: 1 / -1; }
+        .highlight-box { 
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(0,0,0,0) 100%); 
+            border-top: 4px solid var(--gold-primary); border-left: none; 
+        }
+        .info-item i { font-size: 1.8rem; margin-bottom: 20px; display: inline-block; color: var(--gold-primary); }
+        .info-item h4 { 
+            color: var(--gold-primary); font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; 
+            margin-bottom: 15px; font-family: 'Cinzel', serif; font-weight: 700; border-bottom: 1px dashed rgba(212, 175, 55, 0.3); padding-bottom: 10px;
+        }
+        .info-item p { font-size: 1.05rem; color: #ddd; margin-bottom: 0; line-height: 1.8; font-weight: 300; }
+        
+        /* List styles in paragraphs */
+        .info-item p ul { padding-left: 20px; margin-top: 10px; }
+        .info-item p li { margin-bottom: 8px; }
+
+        /* ปุ่ม Google Maps */
+        .map-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--gold-gradient); color: #000;
+            padding: 10px 20px; border-radius: 30px;
+            text-decoration: none; font-weight: 600; font-size: 1rem;
+            margin-top: 15px; transition: 0.3s; border: 1px solid transparent;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        .map-btn:hover {
+            transform: translateY(-3px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+        }
+        .map-btn i { font-size: 1.2rem; margin-bottom: 0; color: #000; }
+
+        .close-modal-btn { 
+            position: absolute; top: 25px; right: 25px; width: 50px; height: 50px; border-radius: 50%; 
+            background: rgba(0,0,0,0.6); border: 1px solid var(--gold-primary); color: var(--gold-primary); 
+            display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.5rem; 
+            transition: all 0.3s ease; z-index: 10; backdrop-filter: blur(5px);
+        }
+        .close-modal-btn:hover { background: var(--gold-primary); color: #000; transform: rotate(90deg) scale(1.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.6); }
+
+        /* ==========================================================================
+           9. Footer & Academic Project Info
+           ========================================================================== */
+        footer { border-top: 1px solid rgba(212, 175, 55, 0.2); padding: 100px 20px 40px; text-align: center; margin-top: 150px; background: #030303; color: #555; position: relative; }
+        
+        .academic-box {
+            max-width: 800px; margin: -150px auto 80px; background: linear-gradient(160deg, #111, #050505);
+            border: 1px solid var(--gold-dark); border-radius: 15px; padding: 50px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8); position: relative; z-index: 5; text-align: left;
+        }
+        .academic-box::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--gold-gradient); border-radius: 15px 15px 0 0;
+        }
+        
+        /* ==========================================================================
+           10. Responsive Media Queries
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .modal-content { grid-template-columns: 1fr; grid-template-rows: 300px 1fr; height: 100vh; border-radius: 0; width: 100%; }
+            .modal-img { height: 100%; }
+            .modal-text { padding: 30px; }
+            .hero-title { font-size: 4rem; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 15px 20px; }
+            .menu { display: none; }
+            .df-right { grid-template-columns: 1fr 1fr; }
+            .info-grid { grid-template-columns: 1fr; }
+            .section-head h2 { font-size: 2.8rem; }
+            .academic-box { padding: 30px; margin-top: -100px; }
+        }
+    </style>
 </head>
 <body>
+    <!-- Canvas สำหรับเอฟเฟกต์ละอองสีทอง (Particles) -->
     <canvas id="sacred-canvas"></canvas>
 
+    <!-- Navigation Bar -->
     <nav id="navbar">
-    <a href="index.html" class="brand"><i class="fa-solid fa-dharmachakra fa-spin" style="font-size: 1.4rem; --fa-animation-duration: 15s; color: var(--gold-primary);"></i> MOOTELU TRANG</a>
-    <div class="menu">
-        <a href="#places">สถานที่มงคล</a>
-        <a href="calendar.html">ปฏิทินงานบุญ</a>
-        <a href="zodiac.html">เช็คดวง</a>
-        <a href="wish.html">ฝากคำอธิษฐาน</a>
-        <a href="#lucky">เสี่ยงทาย</a>
-        <a href="#about">ผู้จัดทำ</a>
-        <a href="mantra.html" style="color:var(--gold-primary); border:1px solid var(--gold-primary); padding: 5px 15px; border-radius: 20px;">
-            <i class="fa-solid fa-book-open"></i> บทสวดมนต์
+        <a href="#" class="brand" onclick="window.scrollTo(0,0)">
+            <i class="fa-solid fa-dharmachakra fa-spin" style="font-size: 1.4rem; --fa-animation-duration: 20s; color: var(--gold-primary);"></i> 
+            MOOTELU TRANG
         </a>
-    </div>
-</nav>
+        <div class="menu">
+            <a href="#daily-fortune">ฤกษ์มงคล</a>
+            <a href="#places">๙ พิกัดศักดิ์สิทธิ์</a>
+            <a href="#faq">คำถามสายมู</a>
+            <a href="#about" class="nav-btn">ข้อมูลผู้จัดทำ</a>
+        </div>
+    </nav>
 
+    <!-- Hero Section -->
     <header>
         <div class="hero-bg-layer"></div>
         <div style="z-index: 2; position: relative;">
-            <p style="color: var(--gold-light); letter-spacing: 3px; font-size: 0.9rem; margin-bottom: 10px; opacity: 0.8;" data-aos="fade-down">ดินแดนแห่งความศักดิ์สิทธิ์</p>
-            <h1 class="hero-title" data-aos="zoom-out" data-aos-duration="1500">ศรัทธาแห่งเมืองตรัง</h1>
-            <div class="hero-subtitle" data-aos="fade-up" data-aos-delay="500">Spiritual Journey of Trang</div>
+            <p style="color: var(--gold-light); letter-spacing: 4px; font-size: 0.95rem; margin-bottom: 15px; text-shadow: 0 2px 5px #000;" data-aos="fade-down">
+                <i class="fa-solid fa-hands-praying"></i> ศรัทธา • ปาฏิหาริย์ • บารมี
+            </p>
+            <h1 class="hero-title" data-aos="zoom-out" data-aos-duration="1500">มูเตลู เมืองตรัง</h1>
+            <div class="hero-subtitle" data-aos="fade-up" data-aos-delay="400">
+                คู่มือท่องเที่ยวเชิงจิตวิญญาณ ฉบับเจาะลึก ๙ สถานที่มงคล
+            </div>
         </div>
-        <div class="scroll-indicator"></div>
+        <div class="scroll-indicator" onclick="document.getElementById('daily-fortune').scrollIntoView({behavior: 'smooth'})"></div>
     </header>
 
     <div class="container">
+        
+        <!-- Section: ฤกษ์มงคลประจำวัน (Daily Fortune Widget) -->
+        <div id="daily-fortune" class="daily-fortune-widget" data-aos="fade-up">
+            <div class="df-left">
+                <h3 style="font-family:'Charm'; font-size:2.5rem; color:var(--gold-primary); margin-bottom:10px;">ปฏิทินฤกษ์มงคล</h3>
+                <p style="color:#aaa; font-size:0.95rem; margin-bottom:20px;">ตรวจเช็คพลังงานประจำวัน เพื่อการเริ่มต้นที่ดีก่อนเดินทางไปกราบไหว้สิ่งศักดิ์สิทธิ์</p>
+                <div id="currentDate" style="font-family:'Cinzel'; font-size:1.1rem; color:#fff; border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:20px;">
+                    กำลังคำนวณ...
+                </div>
+                <button onclick="calculateFortune()" style="background:transparent; border:1px solid var(--gold-primary); color:var(--gold-primary); padding:8px 20px; border-radius:20px; cursor:pointer; font-family:'Sarabun'; transition:0.3s;">
+                    <i class="fa-solid fa-rotate"></i> อัปเดตฤกษ์ยาม
+                </button>
+            </div>
+            <div class="df-right">
+                <div class="df-box">
+                    <i class="fa-regular fa-clock"></i>
+                    <h4>เวลามงคล (เวลารวย)</h4>
+                    <p id="luckyTime">09:09 - 11:11 น.</p>
+                </div>
+                <div class="df-box">
+                    <i class="fa-solid fa-shirt"></i>
+                    <h4>สีเสื้อมงคล</h4>
+                    <p id="luckyColor"><span class="color-dot" style="background:red;"></span>สีแดง, สีทอง</p>
+                </div>
+                <div class="df-box">
+                    <i class="fa-solid fa-compass"></i>
+                    <h4>ทิศรับโชค</h4>
+                    <p id="luckyDirection">ทิศตะวันออก</p>
+                </div>
+                <div class="df-box">
+                    <i class="fa-solid fa-ban" style="color:var(--accent-red-light);"></i>
+                    <h4>สีต้องห้าม (กาลกิณี)</h4>
+                    <p id="badColor" style="color:var(--accent-red-light);"><span class="color-dot" style="background:black;"></span>สีดำ</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section: 9 พิกัดมงคล -->
         <div id="places">
             <div class="section-head" data-aos="fade-up">
-                <h2>พิกัดมงคล ๙ แห่ง</h2>
-                <p>สักการะเพื่อความเป็นสิริมงคล พลิกฟื้นดวงชะตา</p>
+                <h2>๙ พิกัดมงคล คู่เมืองตรัง</h2>
+                <p>รวบรวมสถานที่ศักดิ์สิทธิ์ที่ห้ามพลาด พร้อมตำนาน ประวัติศาสตร์ พิกัดที่ตั้ง และ 'ทริคการขอพร' แบบฉบับคนพื้นที่</p>
             </div>
+            
+            <!-- Grid Container สำหรับแสดง Card (สร้างผ่าน JS) -->
             <div class="grid" id="cardGrid"></div>
         </div>
 
-        <div id="activities" style="margin-top: 100px;">
-            <div class="section-head" data-aos="fade-up">
-                <h2>กิจกรรมเสริมดวง</h2>
-                <p>เช็คดวงชะตา ฝากคำอธิษฐาน และติดตามงานบุญ</p>
+        <!-- Section: FAQ คำถามสายมู -->
+        <div id="faq" class="faq-section" data-aos="fade-up">
+            <div class="section-head" style="margin-bottom: 40px;">
+                <h2 style="font-size: 3rem;">คำถามสายมู (FAQ)</h2>
+                <p>ข้อควรรู้ก่อนเดินทางไปสักการะสิ่งศักดิ์สิทธิ์</p>
             </div>
             
-            <div class="grid">
-                <div class="card-wrapper" data-aos="fade-up" data-aos-delay="0">
-                    <div class="card" onclick="window.location.href='zodiac.html'">
-                        <div class="card-img-box" style="display:flex; align-items:center; justify-content:center; background: linear-gradient(45deg, #1a1a1a, #000);">
-                            <i class="fa-solid fa-star-and-crescent" style="font-size: 5rem; color: var(--gold-dark);"></i>
-                        </div>
-                        <div class="card-body">
-                            <span class="card-tag">HOROSCOPE</span>
-                            <h3>เช็คดวง 12 นักษัตร</h3>
-                            <p>ตรวจสอบดวงชะตาปี 2569 ปีไหนชง ปีไหนปัง พร้อมเคล็ดลับแก้เคล็ดเสริมดวงเฉพาะราศีของคุณ</p>
-                        </div>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>1. ผู้หญิงมีประจำเดือน เข้าศาลเจ้าได้หรือไม่?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>ตามความเชื่อดั้งเดิมของชาวจีน (ฮกเกี้ยน/แต้จิ๋ว) ไม่อนุญาตให้ผู้หญิงที่มีประจำเดือนเข้าไปในเขตพื้นที่ชั้นในของศาลเจ้า หรือจับต้องกระถางธูปและองค์เทพ เนื่องจากถือว่าเป็นช่วงที่ร่างกายมีพลังงานไม่บริสุทธิ์ (พลังหยินแรง) แนะนำให้ยืนไหว้และอธิษฐานอยู่บริเวณลานด้านหน้าศาลเจ้าแทน ก็ถือว่าได้รับความเมตตาเช่นเดียวกัน</p>
                     </div>
                 </div>
-
-                <div class="card-wrapper" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card" onclick="window.location.href='calendar.html'">
-                        <div class="card-img-box" style="display:flex; align-items:center; justify-content:center; background: linear-gradient(45deg, #1a1a1a, #000);">
-                            <i class="fa-regular fa-calendar-check" style="font-size: 5rem; color: var(--gold-dark);"></i>
-                        </div>
-                        <div class="card-body">
-                            <span class="card-tag">CALENDAR</span>
-                            <h3>ปฏิทินงานบุญ</h3>
-                            <p>รวมกำหนดการวันพระ งานกินเจ งานลากพระ และเทศกาลสำคัญของเมืองตรังที่ไม่ควรพลาด</p>
-                        </div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>2. การ 'บนบาน' กับ 'ขอพร' ต่างกันอย่างไร?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p><strong>การขอพร:</strong> คือการตั้งจิตอธิษฐานขอสิ่งดีๆ โดยไม่มีข้อแลกเปลี่ยน หากสำเร็จก็กลับมาไหว้ขอบคุณปกติ<br><strong>การบนบาน (แก้บน):</strong> คือการให้คำมั่นสัญญาว่า "หากลูกช้างสำเร็จเรื่อง... จะนำสิ่งนี้มาถวาย หรือจะทำสิ่งนี้แลกเปลี่ยน" เช่น จะกินเจ 7 วัน จะนำไข่ต้ม 99 ฟองมาถวาย ซึ่งหากสำเร็จ <b>*ต้องกลับมาแก้บนตามที่ลั่นวาจาไว้เสมอ ห้ามลืมเด็ดขาด*</b></p>
                     </div>
                 </div>
-
-                <div class="card-wrapper" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card" onclick="window.location.href='wish.html'">
-                        <div class="card-img-box" style="display:flex; align-items:center; justify-content:center; background: linear-gradient(45deg, #1a1a1a, #000);">
-                            <i class="fa-solid fa-hands-praying" style="font-size: 5rem; color: var(--gold-dark);"></i>
-                        </div>
-                        <div class="card-body">
-                            <span class="card-tag">MAKE A WISH</span>
-                            <h3>ฝากคำอธิษฐาน</h3>
-                            <p>เขียนคำขอพรฝากไว้ ณ ดินแดนศักดิ์สิทธิ์ออนไลน์ ตั้งจิตอธิษฐานขอพรให้สมหวังดั่งใจนึก</p>
-                        </div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>3. แก้ชง ต้องไปที่ไหน และทำช่วงเวลาใดดีที่สุด?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>ในจังหวัดตรัง สถานที่ยอดนิยมในการแก้ชงคือ <strong>"วัดสาริการาม"</strong> แนะนำให้ไปทำพิธีฝากดวงและสะเดาะเคราะห์ในช่วงหลังวันตรุษจีน (ประมาณเดือนกุมภาพันธ์) หรือทำทันทีที่รู้ตัวว่าปีนี้เป็นปีชง เพื่อเป็นการซื้อเวลาและปัดเป่าเคราะห์ร้ายตั้งแต่ต้นปี</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>4. ทำไมต้องเติมน้ำมันตะเกียง?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>การเติมน้ำมันตะเกียง เปรียบเสมือนการเติมเชื้อเพลิงให้ชีวิตมีความสว่างไสว โชติช่วงชัชวาล เชื่อว่าอานิสงส์นี้จะช่วยต่ออายุขัย สะเดาะเคราะห์ ทำให้ผู้ที่กำลังพบเจอทางตันในชีวิต (มืดแปดด้าน) มองเห็นทางออก และปัญญาเกิดสว่างขึ้น</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div id="lucky" class="lucky-widget" data-aos="fade-up">
-            <div style="position: relative; z-index: 2;">
-                <i class="fa-solid fa-star-of-david" style="color: var(--accent-red); font-size: 2rem; margin-bottom: 15px; opacity: 0.7;"></i>
-                <h2 style="font-family:'Charm'; font-size:3rem; color:var(--gold-primary); margin-bottom:10px;">เสี่ยงทายเลขมงคล</h2>
-                <p style="color:#aaa; margin-bottom:30px; font-weight: 300;">ตั้งจิตอธิษฐานถึงสิ่งที่ปรารถนา แล้วกดปุ่มเพื่อรับเลขนำโชคประจำวันของคุณ</p>
-                <div id="luckyResult">? ?</div>
-                <button class="lucky-btn" onclick="randomLuckyNumber()">ขอมอบเลขมงคลให้ข้าพเจ้า</button>
-            </div>
-        </div>
+    </div> <!-- End Container -->
 
-        <div id="about" style="margin-top: 150px; text-align: center;" data-aos="fade-up">
-            <i class="fa-solid fa-kaaba" style="font-size: 3rem; color: var(--gold-dark); margin-bottom: 25px;"></i>
-            <h3 style="font-family:'Cinzel'; color:var(--text-main); font-size: 1.8rem; margin-bottom: 20px; letter-spacing: 2px;">THE LEGEND</h3>
-            <p style="max-width: 650px; margin: 0 auto; color: #888; line-height: 1.7; font-weight: 300;">
-                รวบรวมสถานที่ศักดิ์สิทธิ์คู่บ้านคู่เมืองตรัง...
-            </p>
-            
-            <div class="creator-badge" data-aos="zoom-in" data-aos-delay="200">
-                <h4 style="font-family: 'Charm'; font-size: 2rem; color: var(--gold-primary); margin-bottom: 10px;">ผู้จัดทำ</h4>
-                <p style="font-size: 1.4rem; color: #fff; margin-bottom: 15px; font-weight: 600;">คุณสุลาวรรณ์ เพ็งเผา</p>
-                <div style="width: 50px; height: 1px; background: var(--gold-dark); margin: 0 auto 15px auto;"></div>
-                <div style="font-size: 1rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 8px;">
-                    <div><i class="fa-solid fa-envelope" style="color: var(--gold-dark); margin-right: 10px;"></i> Sulawan8847@gmail.com</div>
-                    <div><i class="fa-solid fa-phone" style="color: var(--gold-dark); margin-right: 10px;"></i> 062-735-8847</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!-- Modal With Tabs (สำหรับแสดงข้อมูลเจาะลึก 9 สถานที่) -->
     <div class="modal" id="modal">
         <div class="modal-content">
-            <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+            <!-- ปุ่มปิด Popup -->
             <div class="close-modal-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></div>
             
+            <!-- ฝั่งซ้าย: รูปภาพและชื่อ -->
             <div class="modal-img">
-                <img id="mImg" src="">
-                <div style="position:absolute; bottom:0; left:0; width:100%; height:50%; background:linear-gradient(to top, #1a1a1a, transparent);"></div>
+                <img id="mImg" src="" alt="Place Image">
+                <!-- Gradient Overlay -->
+                <div style="position:absolute; bottom:0; left:0; width:100%; height:80%; background:linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 40%, transparent 100%);"></div>
+                <!-- Title Text -->
+                <div style="position:absolute; bottom:40px; left:40px; right:40px;">
+                    <span id="mTag" style="color:var(--gold-primary); font-family:'Cinzel'; font-size:1rem; letter-spacing:4px; display:block; margin-bottom:10px; text-shadow: 0 2px 4px #000; font-weight:700;">TAG</span>
+                    <h2 id="mTitle" style="font-family:'Charm'; color: #fff; font-size: 3.5rem; line-height:1.1; text-shadow: 0 4px 15px rgba(0,0,0,0.9);">Title</h2>
+                </div>
             </div>
             
+            <!-- ฝั่งขวา: เนื้อหาแบ่ง Tabs -->
             <div class="modal-text">
-                <span id="mTag" style="color:var(--gold-primary); font-family:'Cinzel'; font-size:0.8rem; letter-spacing:3px; margin-bottom:15px; display:block;">TAG</span>
-                <h2 id="mTitle" style="font-family:'Charm'; color: #fff; font-size: 2.8rem; line-height:1.1; margin-bottom: 25px;">Title</h2>
-                <div style="width: 60px; height: 3px; background: var(--gold-dark); margin-bottom: 30px;"></div>
-                <p id="mDesc" style="color: #ccc; line-height: 1.7; font-weight: 300; text-align: justify; margin-bottom: 20px; font-size: 1rem;">Description...</p>
+                <!-- Tab Buttons -->
+                <div class="modal-tabs">
+                    <button class="tab-btn active" onclick="switchTab(event, 'tab1')"><i class="fa-solid fa-landmark"></i> ประวัติและความศักดิ์สิทธิ์</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'tab2')"><i class="fa-solid fa-hands-praying"></i> วิธีไหว้ & ของอธิษฐาน</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'tab3')"><i class="fa-solid fa-map-location-dot"></i> พิกัด & เคล็ดลับ</button>
+                </div>
 
-                <div class="modal-info-group">
-                    <div class="info-item">
-                        <i class="fa-regular fa-clock" style="color:var(--gold-primary);"></i>
-                        <h4>เวลา & พิกัด</h4>
-                        <p id="mTime" style="font-size:0.85rem; color:#bbb;">-</p>
-                        <p id="mLoc" style="margin-top:5px;">-</p>
+                <!-- Tab 1: ประวัติศาสตร์ -->
+                <div id="tab1" class="tab-content active">
+                    <div class="info-item full">
+                        <i class="fa-solid fa-book-journal-whills"></i>
+                        <h4>ประวัติศาสตร์และตำนานท้องถิ่น</h4>
+                        <p id="mHistory" style="text-align: justify; white-space: pre-line;">กำลังโหลดข้อมูล...</p>
                     </div>
-                    <div class="info-item">
-                        <i class="fa-solid fa-gift" style="color:var(--gold-primary);"></i>
-                        <h4>ของไหว้</h4>
-                        <p id="mOfferings">-</p>
+                </div>
+
+                <!-- Tab 2: วิธีไหว้และของขอพร -->
+                <div id="tab2" class="tab-content">
+                    <div class="info-grid">
+                        <div class="info-item full highlight-box">
+                            <i class="fa-solid fa-bullseye"></i>
+                            <h4>พุทธคุณ / เรื่องที่ควรขอพร</h4>
+                            <p id="mBestFor" style="color: var(--gold-light); font-weight: 400; font-size: 1.1rem; white-space: pre-line;">-</p>
+                        </div>
+                        <div class="info-item full">
+                            <i class="fa-solid fa-list-ol"></i>
+                            <h4>ขั้นตอนและวิธีไหว้ขอพรที่ถูกต้อง</h4>
+                            <p id="mHowTo" style="white-space: pre-line; line-height: 1.8;">-</p>
+                        </div>
+                        <div class="info-item full">
+                            <i class="fa-solid fa-gift"></i>
+                            <h4>ของไหว้ที่ต้องเตรียม</h4>
+                            <p id="mOfferings">-</p>
+                        </div>
                     </div>
-                    <div class="info-item">
-                        <i class="fa-solid fa-hand-sparkles" style="color:var(--gold-primary);"></i>
-                        <h4>เคล็ดลับ</h4>
-                        <p id="mTip">-</p>
+                </div>
+
+                <!-- Tab 3: เคล็ดลับและพิกัด -->
+                <div id="tab3" class="tab-content">
+                    <div class="info-grid">
+                        <div class="info-item full highlight-box" style="border-top-color: var(--accent-red);">
+                            <i class="fa-solid fa-hand-sparkles" style="color: var(--accent-red-light);"></i>
+                            <h4 style="color: var(--accent-red-light);">เคล็ดลับเฉพาะ (Secret Tips)</h4>
+                            <p id="mTip" style="white-space: pre-line;">-</p>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-regular fa-clock"></i>
+                            <h4>เวลาเปิด-ปิด</h4>
+                            <p id="mTime" style="font-size: 1.1rem; color: #fff;">-</p>
+                        </div>
+                        <div class="info-item" style="display: flex; flex-direction: column;">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <h4>พิกัดสถานที่</h4>
+                            <p id="mLoc" style="font-size: 1.1rem; color: #fff; margin-bottom: 10px;">-</p>
+                            <!-- ปุ่ม Google Maps อัปเดตผ่าน JS -->
+                            <a id="mMapLink" class="map-btn" href="#" target="_blank">
+                                <i class="fa-solid fa-map-location-dot"></i> นำทางไปยังสถานที่จริง
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Footer & ข้อมูลจัดทำโครงงาน -->
+    <footer id="about">
+        <!-- กล่องข้อมูลวิชาการ ซ้อนทับระหว่าง Container กับ Footer -->
+        <div class="academic-box" data-aos="zoom-in">
+            <div style="display:flex; align-items:center; gap:20px; margin-bottom: 25px;">
+                <i class="fa-solid fa-graduation-cap" style="font-size: 3.5rem; color: var(--gold-primary);"></i>
+                <div>
+                    <h3 style="font-family:'Cinzel'; color:var(--gold-primary); font-size: 1.8rem; letter-spacing: 2px; line-height:1.2;">ACADEMIC PROJECT</h3>
+                    <span style="color: #888; font-size: 0.95rem;">โครงงานบูรณาการความรู้: วัฒนธรรม ความเชื่อ และเทคโนโลยี</span>
+                </div>
+            </div>
+            <p style="color: #bbb; line-height: 1.8; margin-bottom: 30px; font-weight: 300;">
+                เว็บไซต์ <strong>Mootelu Trang</strong> จัดทำขึ้นเพื่อเป็นส่วนหนึ่งของการศึกษา มีวัตถุประสงค์เพื่อรวบรวม อนุรักษ์ และเผยแพร่ข้อมูลเชิงลึกทางด้านประวัติศาสตร์ ความเชื่อท้องถิ่น สถาปัตยกรรม และวิถีชีวิตของชาวจังหวัดตรังที่ผูกพันกับศาสนสถาน 
+                ผ่านการออกแบบในรูปแบบ Interactive Web Application ที่ทันสมัย เข้าถึงง่าย และสามารถนำไปใช้เป็นคู่มือการท่องเที่ยวเชิงวัฒนธรรมได้จริง
+            </p>
+            <div style="border-top: 1px dashed rgba(212, 175, 55, 0.3); padding-top: 25px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div>
+                    <span style="color: #777; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 5px;">ผู้จัดทำโครงงาน</span>
+                    <strong style="color: #fff; font-size: 1.2rem;">คุณสุลาวรรณ์ เพ็งเผา</strong>
+                </div>
+                <div>
+                    <span style="color: #777; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 5px;">ช่องทางการติดต่อ</span>
+                    <div style="color: var(--gold-light);"><i class="fa-solid fa-envelope" style="width:20px;"></i> Sulawan8847@gmail.com</div>
+                    <div style="color: var(--gold-light);"><i class="fa-solid fa-phone" style="width:20px;"></i> 062-735-8847</div>
+                </div>
+            </div>
+        </div>
+        
+        <p>&copy; 2026 Mootelu Trang. All Rights Reserved. <br><span style="font-size: 0.8rem; color: #444;">(หมายเหตุ: ข้อมูลอ้างอิงจากความเชื่อส่วนบุคคล โปรดใช้วิจารณญาณ)</span></p>
+    </footer>
+
+    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js"></script>
+    <script>
+        /* ==========================================================================
+           1. Initialization & UI Effects
+           ========================================================================== */
+        // เริ่มต้น Animate On Scroll
+        AOS.init({ duration: 1000, once: true, offset: 50 });
+
+        // เปลี่ยนสไตล์ Navbar เมื่อ Scroll หน้าจอ
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if(nav) {
+                if (window.scrollY > 50) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+            }
+        });
+
+        // ระบบ Accordion สำหรับ FAQ
+        function toggleAccordion(element) {
+            const item = element.parentElement;
+            const content = element.nextElementSibling;
+            
+            // ปิดตัวอื่นทั้งหมดก่อน (ทางเลือก)
+            const allItems = document.querySelectorAll('.accordion-item');
+            allItems.forEach(i => {
+                if(i !== item && i.classList.contains('active')) {
+                    i.classList.remove('active');
+                    i.querySelector('.accordion-content').style.maxHeight = null;
+                }
+            });
+
+            // เปิด/ปิด ตัวที่คลิก
+            item.classList.toggle('active');
+            if (item.classList.contains('active')) {
+                content.style.maxHeight = content.scrollHeight + "px";
+            } else {
+                content.style.maxHeight = null;
+            }
+        }
+
+        /* ==========================================================================
+           2. Daily Fortune Logic (คำนวณฤกษ์มงคลแบบสุ่มตามวัน)
+           ========================================================================== */
+        function calculateFortune() {
+            const today = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').innerText = "วัน" + today.toLocaleDateString('th-TH', options);
+
+            const dayOfWeek = today.getDay(); // 0=Sun, 1=Mon, ...
+            
+            // ข้อมูลสีมงคล (อ้างอิงตำราภูมิทักษาเบื้องต้น)
+            const fortunes = [
+                { time: "09:09 - 11:15 น.", color: "สีแดง, สีชมพู", bad: "สีฟ้า, น้ำเงิน", dir: "ทิศตะวันออก", cCode: "#ff4d4d", bCode: "#0000ff" }, // Sun
+                { time: "06:36 - 08:24 น.", color: "สีเหลือง, สีขาว", bad: "สีแดง", dir: "ทิศใต้", cCode: "#ffff00", bCode: "#ff0000" }, // Mon
+                { time: "10:45 - 12:30 น.", color: "สีชมพู, สีม่วง", bad: "สีเหลือง, ขาว", dir: "ทิศตะวันตกเฉียงใต้", cCode: "#ff66b2", bCode: "#ffff00" }, // Tue
+                { time: "08:15 - 10:05 น.", color: "สีเขียว", bad: "สีชมพู", dir: "ทิศเหนือ", cCode: "#00cc00", bCode: "#ff66b2" }, // Wed
+                { time: "11:20 - 13:10 น.", color: "สีส้ม, สีทอง", bad: "สีม่วง, ดำ", dir: "ทิศตะวันออกเฉียงเหนือ", cCode: "#ffa500", bCode: "#800080" }, // Thu
+                { time: "07:05 - 09:15 น.", color: "สีฟ้า, น้ำเงิน", bad: "สีเทา, บรอนซ์", dir: "ทิศตะวันออกเฉียงใต้", cCode: "#3399ff", bCode: "#808080" }, // Fri
+                { time: "13:30 - 15:20 น.", color: "สีดำ, สีม่วง", bad: "สีเขียว", dir: "ทิศตะวันตก", cCode: "#800080", bCode: "#00cc00" }  // Sat
+            ];
+
+            const f = fortunes[dayOfWeek];
+            
+            // ใส่เอฟเฟกต์เฟด
+            const dfRight = document.querySelector('.df-right');
+            dfRight.style.opacity = 0;
+            
+            setTimeout(() => {
+                document.getElementById('luckyTime').innerText = f.time;
+                document.getElementById('luckyColor').innerHTML = `<span class="color-dot" style="background:${f.cCode};"></span>${f.color}`;
+                document.getElementById('luckyDirection').innerText = f.dir;
+                document.getElementById('badColor').innerHTML = `<span class="color-dot" style="background:${f.bCode};"></span>${f.bad}`;
+                dfRight.style.transition = "opacity 0.5s";
+                dfRight.style.opacity = 1;
+            }, 300);
+        }
+        // รันครั้งแรกเมื่อโหลดเว็บ
+        calculateFortune();
+
+        /* ==========================================================================
+           3. Core Data: 9 Places of Worship (ข้อมูลระดับ Database ขนาดยักษ์ พร้อมลิงก์แผนที่ และรูปต้นฉบับ)
+           ========================================================================== */
+        const places = [
+            { 
+                name: "ศาลเจ้าท่ามกงเยี่ย", 
+                img: "image/mokongyeas.jpg", 
+                tag: "HEALING & FAMILY", 
+                time: "06:00 - 18:00 น.",
+                loc: "ถ.เพลินพิทักษ์ ต.ทับเที่ยง อ.เมือง จ.ตรัง",
+                map: "https://www.google.com/maps/search/?api=1&query=ศาลเจ้าท่ามกงเยี่ย+ตรัง",
+                history: `ศาลเจ้าท่ามกงเยี่ย เป็นศาลเจ้าเก่าแก่คู่เมืองตรัง สถาปัตยกรรมตัวอาคารเป็นแบบจีนตอนใต้ (ฮกเกี้ยน) สะท้อนถึงการอพยพของชาวจีนในอดีตที่เข้ามาตั้งรกรากในเมืองตรัง
+                
+                องค์ประธานคือ 'องค์ท่ามกงเยี่ย' ตามประวัติศาสตร์ท่านเป็นบุคคลที่มีตัวตนจริงในสมัยราชวงศ์ซ่ง (ค.ศ. 960-1279) เกิดที่มณฑลกวางตุ้ง ท่านเป็นผู้มีเมตตาตั้งแต่เด็ก และเมื่อบวชเรียนได้เชี่ยวชาญด้านยาสมุนไพรและการแพทย์ มักรักษาโรคให้ชาวบ้านฟรี เมื่อท่านละสังขารในวัยเพียง 20 กว่าปี ชาวบ้านที่เคารพรักจึงตั้งศาลบูชา 
+                
+                สำหรับในเมืองตรัง ชาวไทยเชื้อสายจีนได้อัญเชิญผงธูปมาประดิษฐาน ณ ที่แห่งนี้ ปัจจุบันศาลเจ้าแห่งนี้เป็นศูนย์รวมจิตใจที่คนตรังเคารพศรัทธาอย่างสูงสุด ไม่ว่าใครเจ็บไข้ได้ป่วยก็มักจะมาพึ่งพิงบารมีท่านเสมอ`,
+                bestFor: "1. ปัดเป่าโรคภัยไข้เจ็บที่รักษายากหรือเรื้อรัง ให้มีปาฏิหาริย์หรือพบหมอที่เก่ง\n2. ขอบุตร (สำหรับผู้ที่ประสบปัญมีบุตรยาก)\n3. ฝากตัวเด็กแรกเกิดเป็น 'ข้ายฮุก' (ลูกบุญธรรมเทพ) เพื่อให้เลี้ยงง่าย ไม่ดื้อ\n4. ขอความร่มเย็นเป็นสุข ปรองดองในครอบครัว",
+                howTo: `1. จัดเตรียมของไหว้ใส่ถาด นำธูปจำนวน 9 ดอก
+                2. ไหว้จุดที่ 1: ฟ้าดิน (ทีกง) ที่กระถางหน้าสุดด้านนอก ปักธูป 3 ดอก หันหน้าออกถนน
+                3. ไหว้จุดที่ 2: เดินเข้ามาด้านใน ไหว้องค์ประธาน (ท่ามกงเยี่ย) ปักธูป 3 ดอก ตั้งนะโม 3 จบ แจ้งชื่อ-นามสกุล วันเดือนปีเกิด 
+                4. ตั้งจิตอธิษฐานอย่างแน่วแน่ ระบุเรื่องที่ต้องการให้ท่านช่วยอย่างชัดเจน (เช่น ชื่อคนป่วย อาการที่เป็น หรือเพศบุตรที่อยากได้)
+                5. ไหว้จุดที่ 3 และ 4: ปักธูปตามกระถางซ้ายและขวา กระถางละ 1 ดอก เพื่อไหว้เทพเจ้าที่คุ้มครองซ้ายขวา
+                6. ไหว้จุดที่ 5: ปักธูป 1 ดอกที่กระถางประตูยักษ์ (มึ่งซิ้ง) ทางเข้า
+                7. เมื่อไหว้เสร็จ ให้นำส้มมงคลที่ถวายไปลา (แลก) กลับมาทานเพื่อความเป็นสิริมงคลเป็นยารักษาโรค`,
+                offerings: "ส้มมงคล 4 หรือ 5 ผล (ส้มในภาษาจีนแต้จิ๋วเรียกว่า 'กิก' แปลว่าโชคดี), น้ำชา 3 ถ้วย, ขนมจันอับ หรือขนมเปี๊ยะ\n(ข้อห้าม: ศาลเจ้านี้ห้ามถวายของคาวหรือเนื้อสัตว์เด็ดขาด)",
+                tip: `[ การแก้บนที่ถูกต้อง ]
+                หากมาขอบุตรแล้วสมปรารถนา หรือขอให้หายป่วยแล้วอาการดีขึ้น ถือเป็นธรรมเนียมปฏิบัติของชาวตรังที่ต้องกลับมาแก้บนด้วย 'ไข่ต้มย้อมสีแดง' (อั่งอี๋) จำนวน 9, 39 หรือ 99 ฟอง เพราะไข่แดงสื่อถึงการเกิดใหม่และความเป็นมงคลสูงสุด
+                
+                [ เซียมซียา ]
+                ในอดีต (และปัจจุบันยังมีอยู่) ศาลเจ้ามี 'เซียมซียา' ซึ่งเมื่อเขย่าได้เบอร์ใด สามารถนำไปเทียบใบเซียมซีเพื่อจัดเทียบยาจีนโบราณไปต้มกินรักษาโรคได้ ซึ่งมีความแม่นยำสูงมาก`
+            },
+            { 
+                name: "ศาลเจ้ากิวอ่องเอี่ย", 
+                img: "image/kiwongee.jpg", 
+                tag: "PURIFICATION", 
+                time: "07:00 - 17:30 น.",
+                loc: "ถ.ท่ากลาง ต.ทับเที่ยง อ.เมือง จ.ตรัง",
+                map: "https://www.google.com/maps/search/?api=1&query=ศาลเจ้ากิวอ่องเอี่ย+ตรัง",
+                history: `ศาลเจ้ากิวอ่องเอี่ย เป็นสถานที่ที่มีความสำคัญทางประวัติศาสตร์และวัฒนธรรมอย่างยิ่ง เนื่องจากเป็น 'ต้นกำเนิดและศูนย์กลางประเพณีถือศีลกินเจ' อันยิ่งใหญ่ระดับประเทศของจังหวัดตรัง ซึ่งมีประวัติยาวนานกว่า 150 ปี
+                
+                คำว่า 'กิวอ่อง' แปลว่า กษัตริย์ 9 พระองค์ ซึ่งตามคติความเชื่อของลัทธิเต๋า หมายถึงเทพเจ้าแห่งดาวดวงดาวทั้ง 9 (นพเคราะห์) ผู้กำหนดชะตาชีวิตมนุษย์ ศาลเจ้าแห่งนี้จึงเป็นศูนย์กลางของงานบุญในเดือน 9 ตามปฏิทินจีนของทุกปี มีขบวนแห่พระออกโปรดสาธุชนรอบเมือง พิธีลุยไฟ พิธีไต่บันไดมีด ที่แสดงให้เห็นถึงความศรัทธาและพลังจิตที่แรงกล้า 
+                
+                ในทางจิตวิญญาณ ที่นี่ถือเป็นแหล่งรวมพลังงานหยาง (พลังบริสุทธิ์และแสงสว่าง) ที่แข็งแกร่งที่สุดในเมืองตรัง`,
+                bestFor: "1. ชำระล้างสิ่งอัปมงคล ปัดเป่าความซวย หรือแก้ดวงตก (โดยเฉพาะผู้ที่อยู่ในวัยเบญจเพส)\n2. ขอแสงสว่างและสติปัญญาในการดำเนินชีวิต แก้ไขปัญหาที่หาทางออกไม่ได้\n3. ขอพรด้านความซื่อสัตย์ การปกครองลูกน้องบริวาร\n4. ขอให้จิตใจสงบ ปล่อยวางจากเจ้ากรรมนายเวร",
+                howTo: `1. แนะนำให้แต่งกายด้วยเสื้อผ้าสีขาว หรือชุดที่สะอาดเรียบร้อยที่สุด เพื่อเป็นการแสดงความเคารพต่อความบริสุทธิ์ของสถานที่และองค์เทพ
+                2. จุดธูป 9 ดอก ไหว้องค์ 'กิวอ่องตะเต่' (เทพประธาน) บอกกล่าวชื่อ-สกุล วันเดือนปีเกิด และเล่าถึงอุปสรรคชีวิตที่กำลังเผชิญ
+                3. ขั้นตอนการปัดเคราะห์: หากรู้สึกว่าช่วงนี้ดวงตกหนัก ให้นำ 'หงิ่งเตี๋ย' (กระดาษเงินกระดาษทองชุดใหญ่) มาถือไว้ ลูบปัดเป่าตั้งแต่ศีรษะจรดปลายเท้าจำนวน 3 หรือ 9 ครั้ง โดยจินตนาการว่ากำลังดึงเคราะห์ร้าย โรคภัย ออกจากตัว 
+                4. นำกระดาษที่ปัดแล้วไปเผาในเตาเผาด้านนอก เพื่อเป็นการส่งเคราะห์ภัยกลับคืนสู่สวรรค์ให้มอดไหม้ไป`,
+                offerings: "ผลไม้มงคล 5 อย่าง (กล้วย, แอปเปิ้ล, ส้ม, สับปะรด, องุ่น), ธูปเทียนทองชุดใหญ่, พวงมาลัยดอกดาวเรืองสด, น้ำมันเติมตะเกียง",
+                tip: `[ กฎเหล็กก่อนเข้าขอพร ]
+                เพื่อให้คำอธิษฐานส่งไปถึงเบื้องบนอย่างรวดเร็วและมีพลัง ควร 'ชำระร่างกายให้สะอาดและงดเว้นการรับประทานเนื้อสัตว์ (ทานเจ/มังสวิรัติ) อย่างน้อย 1 มื้อ' ก่อนเข้ามากราบไหว้ 
+                
+                [ การสะสมบารมี ]
+                ในช่วงเทศกาลกินเจ (ตุลาคม) การได้มาร่วมเป็น 'จิตอาสา' ในศาลเจ้า เช่น ช่วยล้างจาน หั่นผัก ช่วยงานโรงทาน ถือเป็นการสร้างบุญบารมีที่ยิ่งใหญ่และเห็นผลรวดเร็วกว่าการบริจาคด้วยเงินเพียงอย่างเดียว`
+            },
+            { 
+                name: "ศาลหลักเมืองตรัง", 
+                img: "image/themaincourt.jpg", 
+                tag: "STABILITY", 
+                time: "เปิดตลอด 24 ชั่วโมง (แนะนำเวลา 08:00 - 17:00 น.)",
+                loc: "ต.ควนธานี อ.กันตัง จ.ตรัง",
+                map: "https://www.google.com/maps/search/?api=1&query=ศาลหลักเมืองตรัง",
+                history: `ศาลหลักเมืองจังหวัดตรัง ตั้งอยู่ที่ตำบลควนธานี อำเภอกันตัง ซึ่งเป็นที่ตั้งของเมืองตรังในอดีต (ก่อนจะย้ายศูนย์กลางเมืองมายังอำเภอทับเที่ยงในปัจจุบัน) 
+                
+                ศาลหลักเมืองแห่งนี้สร้างขึ้นในสมัยพระยาตรังคภูมาภิบาล (หลวงศักดิ์นายเวร) ผู้ว่าราชการเมืองตรัง ในปี พ.ศ. 2354 (ต้นสมัยรัตนโกสินทร์) ถือเป็นสิ่งศักดิ์สิทธิ์คู่บ้านคู่เมืองที่มีอายุยาวนานกว่า 200 ปี ตัวศาลปัจจุบันได้รับการบูรณะเป็นสถาปัตยกรรมทรงไทยจตุรมุข ภายในประดิษฐานเสาหลักเมืองที่ทำจากไม้มงคลยอดแกะสลักสวยงาม
+                
+                ศาลหลักเมืองเปรียบเสมือน 'เสาเข็มและหัวใจ' ของเมือง เป็นสัญลักษณ์ของรากฐาน ความมั่นคง และเป็นศูนย์รวมวิญญาณของอดีตเจ้าเมือง บรรพชน และเทพยดาผู้ปกปักรักษาสายน้ำและแผ่นดินเมืองตรัง`,
+                bestFor: "1. การสอบแข่งขันครั้งสำคัญ (สอบบรรจุข้าราชการ, ครูผู้ช่วย, ทหาร, ตำรวจ, รัฐวิสาหกิจ)\n2. ขอเลื่อนขั้น เลื่อนตำแหน่ง โยกย้ายสายงานไปในทิศทางที่ดีขึ้น\n3. ขอให้ธุรกิจหรือบริษัทมีความมั่นคง หยั่งรากลึก ไม่ล้มลุกคลุกคลาน\n4. ขอใบอนุญาต การประมูลงานราชการต่างๆ",
+                howTo: `1. เริ่มจากการกราบไหว้พระภูมิเจ้าที่บริเวณด้านหน้าศาลก่อน เพื่อขออนุญาตเปิดทางและบอกกล่าวเทวดาพื้นที่
+                2. จัดเตรียมเครื่องสักการะ จุดธูป 3 ดอก ไหว้องค์หลักเมืองที่ด้านหน้าศาล ท่องคาถาบูชาศาลหลักเมือง (มีป้ายตั้งไว้ให้)
+                3. การสื่อสาร: แจ้งชื่อ-สกุล อาชีพปัจจุบัน หากมาขอเรื่องสอบให้ระบุข้อมูลให้ละเอียดที่สุด เช่น 'ชื่อสนามสอบ ตำแหน่งที่สอบ วันที่สอบ และเขตพื้นที่' ขอให้บารมีองค์หลักเมืองช่วยเปิดปัญญาและหนุนนำให้สอบติด
+                4. ปิดทองคำเปลวและนำผ้าแพร 3 สี ไปผูกที่เสาหลักเมืองจำลองด้านนอก (เพื่อเป็นการรักษาโบราณสถาน ห้ามผูกหรือปิดทองที่เสาไม้จริงด้านในตัวศาลเด็ดขาด)`,
+                offerings: "พวงมาลัยดอกดาวเรือง (สีเหลืองทองหมายถึงความเจริญรุ่งเรือง), ผ้าแพร 3 สี หรือ 7 สี, แผ่นทองคำเปลวแท้ 100%, น้ำสะอาด 1 ขวด",
+                tip: `[ ศิลปะการปิดทองคำเปลว (ทริคสายมู) ]
+                เวลาปิดแผ่นทองคำเปลวที่เสาหลักเมืองจำลอง ให้เลือกจุดปิดตามวัตถุประสงค์ดังนี้:
+                - หากต้องการ 'ความมั่นคง' ป้องกันการโดนเลย์ออฟ ธุรกิจฝ่าวิกฤต ให้เน้นปิดที่ **ฐานเสา**
+                - หากต้องการ 'เลื่อนขั้น' สอบผ่าน หรือให้ผลงานโดดเด่นทะยานขึ้น ให้เน้นปิดที่ **ยอดเสา**
+                - หากต้องการ 'คนอุปถัมภ์ค้ำชู' เจ้านายรัก ลูกน้องเชื่อฟัง ให้ปิดที่ **กลางต้นเสา**`
+            },
+            { 
+                name: "ศาลเจ้าเปากง (เปาบุ้นจิ้น)", 
+                img: "image/baokongshrine.jpg", 
+                tag: "JUSTICE", 
+                time: "08:00 - 17:00 น.",
+                loc: "ต.ทับเที่ยง อ.เมือง จ.ตรัง",
+                map: "https://www.google.com/maps/search/?api=1&query=ศาลเจ้าเปากง+ตรัง",
+                history: `ศาลเจ้าแห่งนี้เป็นหนึ่งในไม่กี่แห่งในภาคใต้ที่ประดิษฐาน 'องค์ท่านเปาบุ้นจิ้น' (เปากง) เทพเจ้าที่ได้รับการยกย่องสูงสุดในเรื่องความซื่อสัตย์ ยุติธรรม และความเด็ดขาด ในตำนานจีน ท่านเปาบุ้นจิ้นเป็นขุนนางในสมัยราชวงศ์ซ่งเหนือ ผู้ไม่เคยเกรงกลัวต่ออำนาจมืด ตัดสินคดีด้วยความเที่ยงตรงจนเป็นที่กล่าวขานถึงปัจจุบัน
+                
+                ศาลเจ้าแห่งนี้จึงถูกสร้างขึ้นเพื่อให้เป็นที่พึ่งพิงทางจิตใจของผู้ที่ตกทุกข์ได้ยากจากการถูกเอาเปรียบ ไม่ได้รับความเป็นธรรม ถูกใส่ร้ายป้ายสี หรือโดนกลั่นแกล้งในที่ทำงาน เชื่อกันว่าบารมีและอาญาสิทธิ์แห่งศาลไคฟงของท่านเปา จะช่วยดลบันดาลให้เบิกเนตรความจริง คลี่คลายคดีความ และลงโทษผู้ที่กระทำผิดอย่างสาสม`,
+                bestFor: "1. ชนะคดีความทางกฎหมาย (ที่ตนเองเป็นฝ่ายถูก)\n2. ทวงหนี้จากลูกหนี้ที่เหนียวหนี้ หรือถูกฉ้อโกง\n3. ขอความยุติธรรม กรณีถูกเจ้านายหรือเพื่อนร่วมงานใส่ร้ายป้ายสี\n4. ขจัดคนพาล ศัตรู หรือคู่แข่งที่ใช้วิธีสกปรกออกจากชีวิต",
+                howTo: `1. จุดธูป 5 ดอก ไหว้องค์เปาบุ้นจิ้นที่กระถางประธาน ตั้งจิตให้นิ่งและเด็ดขาด
+                2. การยื่นฟ้องร้อง (ทางความเชื่อ): หากมีคดีความหรือถูกโกง ให้นำสำเนาเอกสารที่เกี่ยวข้อง (ปิดทับข้อมูลส่วนตัวที่สำคัญอย่างเลขบัตรปชช.) หรือเขียนชื่อ-สกุลของผู้ที่กระทำผิดต่อเราลงในกระดาษสีแดง นำไปวางต่อหน้าท่าน
+                3. อธิบายเรื่องราวอย่างซื่อสัตย์ 'ห้ามบิดเบือนหรือโกหกแม้แต่น้อย' อธิษฐานขอให้ท่านช่วยเบิกเนตรให้ความจริงปรากฏ และขอให้ได้รับความยุติธรรม
+                4. เมื่อเรื่องราวคลี่คลาย ต้องกลับมาทำบุญหรือถวายของตามที่ได้กล่าวไว้`,
+                offerings: "น้ำชาชั้นดี 3 ถ้วย, ผลไม้ที่มีสีดำหรือสีเข้มเพื่อสื่อถึงความหนักแน่นเด็ดขาด (เช่น องุ่นดำ, พลัมดำ, แบล็คเบอร์รี่), ขนมเปี๊ยะงาดำ",
+                tip: `[ คำเตือนอาถรรพ์ (ข้อห้ามเด็ดขาด) ]
+                ศาลเจ้าแห่งนี้มีความศักดิ์สิทธิ์และมีอาถรรพ์แรงมาก ข้อควรระวังขั้นสูงสุดคือ **'ผู้ที่มาขอพรต้องเป็นฝ่ายที่ถูกต้องและซื่อสัตย์อย่างแท้จริง'** หากรู้ตัวว่าตนเองเป็นฝ่ายผิด มีส่วนร่วมในการโกง หรือคิดใช้บารมีท่านไปกลั่นแกล้งคนอื่น ห้ามมาทำพิธีขอพรที่นี่เด็ดขาด เพราะศาลจะพลิกกลับ และผลกรรมจะสะท้อนกลับเข้าหาตัวผู้ขออย่างรุนแรง`
+            },
+            { 
+                name: "วิหารคริสตจักรตรัง", 
+                img: "image/church.jpg", 
+                tag: "LOVE & PEACE", 
+                time: "09:00 - 16:00 น.",
+                loc: "ถ.ห้วยยอด ต.ทับเที่ยง อ.เมือง จ.ตรัง",
+                map: "https://www.google.com/maps/search/?api=1&query=คริสตจักรตรัง",
+                history: `วิหารคริสตจักรตรัง ก่อสร้างขึ้นอย่างเป็นทางการในปี ค.ศ. 1915 (พ.ศ. 2458) สร้างโดยคณะมิชชันนารีชาวอเมริกัน เป็นสถาปัตยกรรมแบบตะวันตกที่งดงามคลาสสิก ตัวอาคารทาสีเหลืองมัสตาร์ดสดใส ตัดกับสีขาวของเสาและกรอบหน้าต่าง ประดับด้วยกระจกสี (Stained Glass) ที่มีลวดลายสวยงาม และมีหอระฆังโดดเด่นเป็นสง่า
+                
+                แม้ที่นี่จะเป็นศาสนสถานของศาสนาคริสต์นิกายโปรเตสแตนต์ แต่ด้วยสถาปัตยกรรมที่มีคุณค่าทางประวัติศาสตร์ และการเปิดกว้างต้อนรับทุกคน จึงทำให้ที่นี่กลายเป็นแลนด์มาร์คสำคัญของจังหวัด สถานที่แห่งนี้อบอวลไปด้วยพลังงานแห่ง 'ความรักและการให้อภัย' ตามคำสอนหลักของศาสนาคริสต์ จึงกลายเป็นพิกัดทางจิตใจที่คนทุกศาสนาสามารถมาสัมผัสความสงบสุขได้`,
+                bestFor: "1. ขอพรเรื่องความรักที่บริสุทธิ์ การตามหาคู่ครองที่ซื่อสัตย์\n2. ขอพรให้ชีวิตครอบครัวมีความปรองดอง ไม่ทะเลาะเบาะแว้ง\n3. ขอความสงบสุขทางจิตใจ ปล่อยวางจากความเครียด ภาวะซึมเศร้า หรือความแค้น\n4. สถานที่ยอดนิยมสำหรับการถ่ายภาพ Pre-wedding เพื่อเป็นสิริมงคลเริ่มต้นชีวิตคู่",
+                howTo: `1. เนื่องจากเป็นเขตศาสนสถานของศาสนาคริสต์ จึง 'ไม่ต้องใช้ธูปเทียน' และห้ามจุดไฟใดๆ
+                2. ให้ยืนหรือนั่งต่อหน้าอาคารวิหาร หรือบริเวณสวนด้านหน้า ด้วยความสงบสำรวม
+                3. ประสานมือทั้งสองข้างไว้ที่ระดับหน้าอก (หากมากับคู่รัก แนะนำให้กุมมือกันไว้) หลับตาและอธิษฐานจิตอย่างแน่วแน่ถึงพระผู้เป็นเจ้า หรือพลังแห่งจักรวาล
+                4. ขอพรให้ประทานความรักที่มั่นคง ขอให้ครอบครัวมีความสุข ระลึกถึงความปรารถนาดีต่อผู้อื่น`,
+                offerings: "ไม่ต้องใช้ของไหว้ประเภทอาหาร สามารถพกช่อดอกกุหลาบสีขาว (สื่อถึงความรักบริสุทธิ์) มาเพื่อถ่ายรูป หรือร่วม 'บริจาคทรัพย์' บำรุงวิหารผ่านกล่องรับบริจาคเพื่อเป็นการให้ทาน ซึ่งถือเป็นบุญกุศลที่ยิ่งใหญ่",
+                tip: `[ กฎแห่งการให้อภัยดึงดูดรักแท้ ]
+                ระหว่างที่อธิษฐานขอพรเรื่องความรัก มีทริคสำคัญคือ ให้ตั้งจิต 'ให้อภัย' ต่อคนที่เคยทำร้ายเราในอดีต (เช่น คนรักเก่าที่ทิ้งไป หรือเพื่อนที่หักหลัง) 
+                ตามหลักจิตวิญญาณ การปล่อยวางความแค้นทิ้งไว้ที่นี่ จะเป็นการเคลียร์พลังงานลบออกจากใจ และช่วยเปิดทางให้พลังงานความรักดีๆ ครั้งใหม่ (Vibration เชิงบวก) เข้ามาในชีวิตได้อย่างรวดเร็วและบริสุทธิ์ขึ้น`
+            },
+            { 
+                name: "วัดกะพังสุรินทร์ พระอารามหลวง", 
+                img: "image/kaphangsurin.jpg", 
+                tag: "PROSPERITY", 
+                time: "05:00 - 19:00 น.",
+                loc: "ถ.เวียนกะพัง ต.ทับเที่ยง อ.เมือง จ.ตรัง",
+                map: "https://www.google.com/maps/search/?api=1&query=วัดกะพังสุรินทร์+ตรัง",
+                history: `วัดกะพังสุรินทร์ เป็นพระอารามหลวงชั้นตรี ชนิดสามัญ และเป็นวัดคู่บ้านคู่เมืองที่สำคัญที่สุดแห่งหนึ่งของจังหวัดตรัง ก่อตั้งขึ้นเมื่อปี พ.ศ. 2440 ชื่อ 'กะพังสุรินทร์' มีที่มาจากสระน้ำขนาดใหญ่ทางทิศเหนือของวัด (ปัจจุบันคือสวนสาธารณะสระกะพังสุรินทร์) ซึ่ง พระยาสุรินทราชา (นกยูง วิเศษกุล) สมุหเทศาภิบาลมณฑลภูเก็ต เป็นผู้ริเริ่มให้ขุดลอกเพื่อใช้เป็นแหล่งน้ำของชาวเมือง
+                
+                สถาปัตยกรรมภายในวัดมีความงดงามร่มรื่น เป็นสถานที่หลักในการจัดงานพิธีสำคัญระดับจังหวัดและระดับประเทศ พระอุโบสถประดิษฐานพระประธานที่ศักดิ์สิทธิ์ การเดินทางมาทำบุญที่พระอารามหลวงแห่งนี้ถือเป็นการทำ 'บุญใหญ่' (มหากุศล) ที่ช่วยเสริมสร้างสิริมงคลและบารมีขั้นสูงสุดตามคติพุทธศาสนา`,
+                bestFor: "1. เสริมโชคลาภวาสนา สร้างบุญบารมีระดับสูงเพื่อหนุนนำดวงชะตา\n2. ขอความสำเร็จในภาพรวมของการดำเนินชีวิต การเริ่มต้นธุรกิจใหม่\n3. ขอให้เจ้านาย ผู้ใหญ่ หรือผู้มีอำนาจ เอ็นดูและสนับสนุนเกื้อกูล (เมตตามหานิยม)\n4. การบวชเรียน ปฏิบัติธรรม เจริญสติปัฏฐาน",
+                howTo: `1. เริ่มจากการเข้าไปกราบไหว้พระประธานในพระอุโบสถ จุดธูปเทียนบูชาพระรัตนตรัย สวดคาถาอิติปิโสฯ อย่างน้อย 3 จบ เพื่อชำระจิตใจให้ผ่องใสและมีสมาธิ
+                2. นำชุดสังฆทาน (ที่เตรียมมาอย่างดี) ไปถวายแด่พระภิกษุสงฆ์ รับพร และ 'ตั้งใจกรวดน้ำ' อุทิศส่วนกุศลให้เจ้ากรรมนายเวร บิดามารดา และเทวดาประจำตัวอย่างเจาะจง
+                3. นำดอกบัวไปกราบพระ เดินเวียนเทียนรอบพระอุโบสถ 3 รอบ (เวียนขวาตามทักษิณาวัตร) 
+                4. ในขณะเดินรอบที่ 1 ให้ระลึกถึงพระพุทธ รอบที่ 2 ระลึกถึงพระธรรม รอบที่ 3 ระลึกถึงพระสงฆ์ พร้อมอธิษฐานถึงเป้าหมายในชีวิตที่ต้องการให้สำเร็จ`,
+                offerings: "ชุดสังฆทานคุณภาพ (แนะนำให้จัดเตรียมเองโดยเลือกของใช้ที่พระสงฆ์จำเป็นต้องใช้จริง เช่น ยารักษาโรคสามัญ อุปกรณ์ทำความสะอาด เครื่องเขียน หลอดไฟ), ดอกบัวสีชมพูหรือขาว 3 ดอก, ปัจจัยชำระหนี้สงฆ์",
+                tip: `[ รับพลังปราณยามเช้า ]
+                ทริคสำหรับคนที่รู้สึกว่าชีวิตช่วงนี้ตื้อตัน คิดอะไรไม่ออก แนะนำให้เดินทางมาวัดนี้ในช่วงเช้าตรู่ (06:00 - 07:00 น.) เพื่อร่วมใส่บาตรพระสงฆ์ที่เดินบิณฑบาตภายในวัด 
+                
+                จากนั้นให้หามุมสงบใต้ต้นไม้ใหญ่ หรือริมสระน้ำ นั่งหลับตาทำสมาธิ กำหนดลมหายใจเข้า-ออก สัก 15 นาที เพื่อสูดรับพลังงาน 'ปราณ' (Chi) บริสุทธิ์จากธรรมชาติและเขตอาราม ก่อนไปเริ่มต้นทำงาน จะทำให้สมองปลอดโปร่งและวันนั้นการเจรจางานจะราบรื่นอย่างเหลือเชื่อ`
+            },
+            { 
+                name: "ศาลพระพิฆเนศ ตรัง", 
+                img: "image/ganesha.jpg", 
+                tag: "SUCCESS", 
+                time: "08:00 - 18:00 น.",
+                loc: "ต.ทับเที่ยง อ.เมือง จ.ตรัง",
+                map: "https://www.google.com/maps/search/?api=1&query=ศาลพระพิฆเนศ+ตรัง",
+                history: `ศาลพระพิฆเนศแห่งนี้ เป็นสถานที่ประดิษฐานเทวรูป 'พระพิฆเนศ' เทพเจ้าตามคติพราหมณ์-ฮินดู ผู้ทรงเป็น 'เทพแห่งปัญญา ความสำเร็จ และองค์ปฐมบูชา' (เทพองค์แรกที่ต้องบูชาก่อนเริ่มพิธีกรรมหรือกิจการใดๆ เพื่อขจัดอุปสรรค)
+                
+                แม้จะเป็นพื้นที่ของภาคใต้ที่โดดเด่นเรื่องศาลเจ้าจีน แต่ความศรัทธาต่อองค์พระพิฆเนศในกลุ่มนักเรียน นักศึกษา ศิลปิน และนักธุรกิจในเมืองตรังก็มีอยู่อย่างเปี่ยมล้น สถานที่แห่งนี้ถูกสร้างขึ้นเพื่อเป็นศูนย์รวมจิตใจของผู้ที่ต้องการพลังสร้างสรรค์ และผู้ที่กำลังจะเริ่มต้นโปรเจกต์ใหม่ๆ ในชีวิตให้ปราศจากขวากหนาม`,
+                bestFor: "1. ขอความสำเร็จในการเรียน การสอบแข่งขันทุกระดับชั้น\n2. การเริ่มต้นธุรกิจใหม่ เปิดร้านใหม่ หรือทำโปรเจกต์ใหม่ให้ราบรื่น\n3. ขอแรงบันดาลใจ ไอเดียสร้างสรรค์ (เหมาะสำหรับสายอาร์ต คอนเทนต์ครีเอเตอร์ วงการบันเทิง)\n4. ปัดเป่าอุปสรรคชิ้นใหญ่ที่ขวางกั้นความก้าวหน้า",
+                howTo: `1. จัดเตรียมของไหว้ใส่ถาด นำไปวางหน้าเทวรูปองค์พระพิฆเนศ
+                2. จุดธูป 9 ดอก หรือใช้กำยานหอม 1 อัน (เทพฮินดูโปรดปรานกลิ่นเครื่องหอม) 
+                3. ตั้งสมาธิ สวดคาถาบูชา 'โอม ศรี คเณศายะ นะมะฮา' จำนวน 3, 9 หรือ 108 จบ ตามกำลังศรัทธา
+                4. บอกชื่อ-นามสกุล และเป้าหมายที่ต้องการให้สำเร็จอย่าง **เจาะจงและวัดผลได้** (ไม่ขอแบบเลื่อนลอย) เช่น 'ขอให้สอบติดคณะ... มหาวิทยาลัย... ในปีนี้' หรือ 'ขอให้ร้าน... มียอดขายทะลุ... บาทในเดือนนี้'
+                5. ลาของไหว้กลับไปรับประทานเป็นสิริมงคล`,
+                offerings: "ขนมลาดู หรือขนมโมทกะ (ขนมโปรดของพระองค์), นมสดรสจืด, น้ำมะพร้าว, กล้วยน้ำว้า, อ้อย, พวงมาลัยดอกดาวเรืองสด \n**(ข้อห้ามสูงสุด: ห้ามถวายเนื้อสัตว์และไข่ทุกชนิดเด็ดขาด เพราะเทพฮินดูถือมังสวิรัติ)**",
+                tip: `[ เทคนิคกระซิบหนูมุสิกะ ]
+                หลังจากสวดขอพรพระพิฆเนศเสร็จแล้ว ทริคสำคัญที่ขาดไม่ได้คือการเดินไปหาเทวรูป 'หนูมุสิกะ' (พาหนะและบริวารคนสนิทของท่าน) ที่อยู่ด้านหน้า
+                
+                ให้เอามือข้างหนึ่ง **ป้องปิดหูหนูไว้หนึ่งข้าง** จากนั้นโน้มตัวลงไป **กระซิบความปรารถนาซ้ำอีกครั้งที่หูหนูอีกข้างหนึ่ง** (พร้อมยัดเงินทำบุญใส่มือหนู) ความเชื่อคือ หนูมุสิกะจะเป็นผู้นำสารนี้ไปเตือนความจำองค์พระพิฆเนศให้รีบประทานพรให้เราโดยเร็ว (ปิดหูไว้เพื่อไม่ให้พรทะลุออกหูซ้ายทะลุหูขวา)`
+            },
+            { 
+                name: "พระโพธิสัตว์กวนอิม เขาหนองยวน", 
+                img: "image/guanyin.jpg", 
+                tag: "MERCY", 
+                time: "06:00 - 18:00 น.",
+                loc: "ยอดเขาหนองยวน ต.ทับเที่ยง อ.เมือง จ.ตรัง",
+                map: "https://www.google.com/maps/search/?api=1&query=จุดชมวิวเขาหนองยวน+ตรัง",
+                history: `บนยอดเขาหนองยวน ซึ่งเป็นจุดชมวิวที่สามารถมองเห็นทัศนียภาพของเมืองตรังได้แบบ 360 องศา เป็นที่ประดิษฐานของ 'องค์พระโพธิสัตว์กวนอิม ปางประทานพร' องค์ใหญ่สีขาวบริสุทธิ์ตระหง่านตา 
+                
+                การสร้างองค์กวนอิมบนที่สูงตามหลักฮวงจุ้ย ถือเป็นการเสริมพลัง 'ชี่' (Chi) ให้กับเมือง ช่วยปัดเป่าภัยพิบัติและนำพารังสีแห่งความเมตตาแผ่กระจายไปทั่วทิศทาง การเดินขึ้นบันไดไปสักการะนอกจากจะได้ออกกำลังกายแล้ว ยังเปรียบเสมือนการแสดงความเพียรพยายามและจิตใจที่มุ่งมั่นเพื่อไปสู่ความศักดิ์สิทธิ์เบื้องบน`,
+                bestFor: "1. เมตตามหานิยม ขอให้เจ้านาย ผู้ใหญ่ และลูกค้าเอ็นดู รักใคร่\n2. ขอให้การค้าขายคล่องตัว เจรจาธุรกิจสำเร็จลุล่วง\n3. แคล้วคลาดปลอดภัยจากการเดินทางไกล หรืออุบัติเหตุ\n4. ขอให้จิตใจร่มเย็น หลุดพ้นจากความโกรธแค้น",
+                howTo: `1. เดินขึ้นบันไดไปยังจุดสักการะบนยอดเขาด้วยใจที่สงบ ไม่บ่นเหนื่อย
+                2. จัดเตรียมเครื่องสักการะ จุดธูป 9 ดอก ยืนมองพระพักตร์ของพระแม่กวนอิมด้วยความเคารพ
+                3. สวดคาถาบูชา 'นำโม ไต๋ซือ ไต๋ปุย กิวโคว่ กิวหลั่ง กวงไต๋เล่งก้ำ กวนซีอิมผู่สัก...' จำนวน 3 หรือ 9 จบ
+                4. อธิษฐานขอพรให้ชีวิตพบเจอแต่คนดีมีเมตตา ขอให้การค้าขายเจริญรุ่งเรือง ไร้ศัตรูคู่แข่งที่คิดร้าย และขอให้ครอบครัวร่มเย็นเป็นสุขเหมือนน้ำอมฤตในแจกันของพระแม่`,
+                offerings: "ดอกบัวสีขาว หรือดอกมะลิ (หอมบริสุทธิ์), น้ำสะอาด 1 ถ้วยเล็ก, ส้มมงคล 5 ผล, สร้อยไข่มุกเทียม (สำหรับถวายเป็นเครื่องประดับองค์ท่าน)",
+                tip: `[ สัจจะวาจาเพื่อเร่งปาฏิหาริย์ ]
+                พระโพธิสัตว์กวนอิมทรงเปี่ยมด้วยความเมตตาต่อสรรพสัตว์ หากต้องการให้คำขอพรสัมฤทธิ์ผลเร็วขึ้นและมีพลังมหาศาล แนะนำให้ตั้ง 'สัจจะวาจา' (การถือศีลหรือข้อวัตรปฏิบัติ) ต่อหน้าท่าน เช่น:
+                - "ลูกจะงดทานเนื้อวัวตลอดชีวิต" (เป็นที่นิยมและเห็นผลที่สุด)
+                - หรือ "ลูกจะงดทานเนื้อสัตว์ทุกๆ วันพระ และวันเกิดของตนเองเป็นเวลา 1 ปี"
+                การต่อรองด้วยการลดการเบียดเบียนสัตว์ จะทำให้สวรรค์เปิดรับคำขอได้อย่างรวดเร็ว`
+            },
+            { 
+                name: "วัดสาริการาม (พิกัดแก้ชง)", 
+                img: "image/sarikaram.jpg", 
+                tag: "PROTECTION", 
+                time: "07:00 - 17:00 น.",
+                loc: "ต.โคกหล่อ อ.เมือง จ.ตรัง",
+                map: "https://www.google.com/maps/search/?api=1&query=วัดสาริการาม+ตรัง",
+                history: `วัดสาริการาม เป็นวัดราษฎร์เก่าแก่ที่มีพื้นที่กว้างขวางและร่มรื่น ในยุคปัจจุบัน วัดแห่งนี้ได้รับการขนานนามจากชาวตรังว่าเป็น 'ศูนย์กลางแห่งการสะเดาะเคราะห์และแก้ปีชง' ที่ครบวงจรที่สุด 
+                
+                ภายในวัดมีการจัดสรรพื้นที่สำหรับทำพิธีกรรมตามคติความเชื่อทั้งพุทธและเต๋าผสมผสานกันอย่างลงตัว ประดิษฐานทั้งพระพุทธรูปศักดิ์สิทธิ์ และ 'องค์ไท้ส่วยเอี๊ย' (เทพเจ้าผู้คุ้มครองดวงชะตาประจำปี) ทำให้ในช่วงต้นปี (เทศกาลตรุษจีน) วัดแห่งนี้จะคลาคล่ำไปด้วยผู้คนที่เดินทางมาฝากดวงชะตา เพื่อขอให้คุ้มครองตลอดทั้งปี`,
+                bestFor: "1. ปัดเป่าเคราะห์ร้าย ล้างซวย แก้ดวงตกหนัก\n2. ทำพิธี 'แก้ปีชง' (ชงตรง, ชงร่วม, คัก, เฮ้ง, ผั่ว)\n3. สะเดาะเคราะห์ต่ออายุขัย สำหรับคนป่วยหนักหรือเกิดอุบัติเหตุบ่อย\n4. พลิกดวงชะตาจากร้ายให้กลายเป็นดี (กลับร้ายกลายเป็นดี)",
+                howTo: `1. เดินทางไปติดต่อเจ้าหน้าที่วัดที่จุดบริการ เพื่อซื้อ 'ชุดทำพิธีแก้ชงหรือสะเดาะเคราะห์'
+                2. นำ 'ใบฝากดวง' (เทียบแดง) มาเขียนข้อมูล: ชื่อ-สกุล, อายุ (นับแบบจีน), วัน/เดือน/ปีเกิด และเวลาตกฟาก (ถ้าทราบ) ให้ชัดเจน
+                3. นำชุดไหว้ไปสักการะพระประธาน และองค์เทพไท้ส่วยเอี๊ยตามจุดที่กำหนด
+                4. **ขั้นตอนสำคัญ:** นำกระดาษปัดเป่าเคราะห์ (หงิ่งเตี๋ย) มาปัดออกจากตัวเองตั้งแต่ศีรษะลงมาถึงปลายเท้า จำนวน 12 ครั้ง (แทน 12 เดือน) พร้อมท่องในใจว่า "ขอให้เคราะห์ร้ายจงออกไป สิ่งดีๆ จงเข้ามา"
+                5. นำใบฝากดวงใส่กล่องฝากดวงชะตาที่วัดจัดไว้ เพื่อให้พระสงฆ์นำไปสวดมนต์คุ้มครองตลอดทั้งปี`,
+                offerings: "ชุดไหว้แก้ชง (ทางวัดมีจัดเตรียมไว้ให้ครบชุด เพื่อความสะดวกและถูกต้องตามประเพณี), น้ำมันเติมตะเกียงขวดใหญ่, เงินร่วมทำบุญซื้อโลงศพไร้ญาติ",
+                tip: `[ ต่อชะตาแสงสว่าง (ทริคสายมู) ]
+                นอกจากการแก้ชงด้วยกระดาษแล้ว สิ่งที่ห้ามพลาดเมื่อมาวัดนี้คือการ 'เติมน้ำมันตะเกียง' ในจุดต่างๆ ที่วัดจัดเตรียมไว้
+                ขณะที่รินน้ำมันลงในตะเกียง ให้อธิษฐานอย่างตั้งใจว่า: "ข้าพเจ้าขอเติมเชื้อเพลิงแห่งชีวิต ขอให้ชีวิตของข้าพเจ้าสว่างไสว ไร้อุปสรรค มีทางออกในทุกปัญหาที่มืดมิด เหมือนแสงไฟในตะเกียงนี้ที่ไม่มีวันดับ"
+                การทำบุญโลงศพไร้ญาติที่วัดนี้ ก็ถือเป็นการต่ออายุขัยที่แรงและเห็นผลไวมากสำหรับคนดวงตกสุดขีด`
+            }
+        ];
+
+        /* ==========================================================================
+           4. Render 9 Places Grid
+           ========================================================================== */
+        const grid = document.getElementById("cardGrid");
+        if (grid) {
+            places.forEach((p, i) => {
+                const cardHTML = `
+                    <div class="card-wrapper" data-aos="fade-up" data-aos-delay="${(i%3)*100}">
+                        <div class="card" onclick="openModal(${i})">
+                            <div class="card-img-box">
+                                <img src="${p.img}" alt="${p.name}">
+                                <div class="card-img-overlay">✦ แตะเพื่ออ่านรายละเอียด</div>
+                            </div>
+                            <div class="card-body">
+                                <span class="card-tag">${p.tag}</span>
+                                <h3>${p.name}</h3>
+                                <p>${p.history.substring(0, 110)}...</p>
+                                <div class="card-footer">
+                                    <span><i class="fa-regular fa-clock"></i> ${p.time.split(' ')[0]} - ${p.time.split(' ')[2]}</span>
+                                    <span>ข้อมูลเจาะลึก <i class="fa-solid fa-arrow-right"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
+            });
+
+            // 3D Tilt Effect สำหรับ Desktop
+            if(window.innerWidth > 768) {
+                const cards = document.querySelectorAll('.card');
+                cards.forEach(card => {
+                    card.addEventListener('mousemove', (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        // คำนวณองศาการเอียงให้นุ่มนวล
+                        const rotateX = ((y - centerY) / centerY) * -6;
+                        const rotateY = ((x - centerX) / centerX) * 6;
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
+                    });
+                    card.addEventListener('mouseleave', () => {
+                        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                    });
+                });
+            }
+        }
+
+        /* ==========================================================================
+           5. Modal (Popup) Logic & Data Binding
+           ========================================================================== */
+        const modal = document.getElementById("modal");
+        
+        function openModal(index) {
+            if (!modal) return;
+            const p = places[index];
+            
+            // Set Left Image
+            document.getElementById("mImg").src = p.img;
+            document.getElementById("mTitle").innerText = p.name;
+            document.getElementById("mTag").innerText = p.tag;
+            
+            // Set Tab 1 (History)
+            document.getElementById("mHistory").innerText = p.history;
+            
+            // Set Tab 2 (How To)
+            document.getElementById("mBestFor").innerText = p.bestFor;
+            document.getElementById("mHowTo").innerText = p.howTo;
+            document.getElementById("mOfferings").innerText = p.offerings;
+            
+            // Set Tab 3 (Tips & Location)
+            document.getElementById("mTip").innerText = p.tip;
+            document.getElementById("mTime").innerText = p.time;
+            document.getElementById("mLoc").innerText = p.loc;
+            
+            // Set Google Maps Link
+            document.getElementById("mMapLink").href = p.map;
+            
+            // Reset to default Tab 1
+            const tabs = document.getElementsByClassName('tab-btn');
+            if(tabs.length > 0) switchTab({currentTarget: tabs[0]}, 'tab1');
+            
+            // Scroll to top of modal text content
+            document.querySelector('.modal-text').scrollTop = 0;
+            
+            // Show Modal with animation
+            modal.style.display = "flex";
+            setTimeout(() => { modal.classList.add("show"); }, 10);
+            
+            // ป้องกัน body scrolling ข้างหลัง
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeModal() {
+            if (!modal) return;
+            modal.classList.remove("show");
+            setTimeout(() => { modal.style.display = "none"; }, 400); // Wait for transition
+            document.body.style.overflow = "auto";
+        }
+
+        // ปิดเมื่อคลิกพื้นที่สีดำรอบนอก Modal
+        window.onclick = (e) => { 
+            if (e.target == modal) closeModal(); 
+        }
+
+        /* ==========================================================================
+           6. Tab Switching Logic (ในหน้า Modal)
+           ========================================================================== */
+        function switchTab(evt, tabId) {
+            let i, tabcontent, tablinks;
+            
+            // ซ่อนเนื้อหาทั้งหมด
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            // ลบ class active ออกจากปุ่มทั้งหมด
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            // แสดงเนื้อหาและใส่สีปุ่มที่ถูกคลิก
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        /* ==========================================================================
+           7. Particle Canvas Effect (ละอองสีทองลอยขึ้น)
+           ========================================================================== */
+        const canvas = document.getElementById("sacred-canvas");
+        if (canvas) {
+            const ctx = canvas.getContext("2d");
+            let particles = [];
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener("resize", resizeCanvas);
+            resizeCanvas();
+            
+            class Particle {
+                constructor() { this.reset(true); }
+                reset(initial = false) {
+                    this.x = Math.random() * canvas.width;
+                    // เริ่มจากข้างล่างแล้วลอยขึ้น
+                    this.y = initial ? Math.random() * canvas.height : canvas.height + 50;
+                    this.vx = (Math.random() - 0.5) * 0.5; // ลอยซ้ายขวาช้าๆ
+                    this.vy = (Math.random() * -1) - 0.1; // ลอยขึ้น
+                    this.size = Math.random() * 1.5 + 0.5;
+                    this.opacity = Math.random() * 0.5; // ความสว่าง
+                    this.fadeRate = Math.random() * 0.002 + 0.0005; // อัตราการจาง
+                }
+                update() {
+                    this.x += this.vx; 
+                    this.y += this.vy; 
+                    this.opacity -= this.fadeRate;
+                    // ถ้านอกจอหรือจางหาย ให้รีเซ็ตกลับไปล่างจอใหม่
+                    if (this.opacity <= 0 || this.y < -50) this.reset();
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
+                    ctx.shadowBlur = 8; 
+                    ctx.shadowColor = "#D4AF37";
+                    ctx.fill(); 
+                    ctx.shadowBlur = 0; // reset
+                }
+            }
+            
+            // สร้างพาร์ติเคิล 100 ดวง
+            for (let i = 0; i < 100; i++) {
+                particles.push(new Particle());
+            }
+            
+            function animateCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { 
+                    p.update(); 
+                    p.draw(); 
+                });
+                requestAnimationFrame(animateCanvas);
+            }
+            animateCanvas();
+        }
+    </script>
 </body>
 </html>
